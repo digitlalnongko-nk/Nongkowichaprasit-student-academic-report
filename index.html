@@ -9,19 +9,19 @@
          [META TAGS สำหรับ Social Media & การแชร์ (LINE, Facebook)]
     =============================================================================== -->
     <title>ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม</title>
-    <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์">
+    <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ สำหรับนักเรียนและผู้ปกครอง">
     
     <!-- Open Graph (Facebook, LINE) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม">
-    <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนระบบออนไลน์">
+    <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ ระบบวิเคราะห์อัจฉริยะ">
     <!-- ระบุภาพปก cover.png ที่จะอัปโหลดไว้ระดับเดียวกับไฟล์ index.html ใน Github -->
     <meta property="og:image" content="cover.png">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม">
-    <meta name="twitter:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนระบบออนไลน์">
+    <meta name="twitter:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์">
     <meta name="twitter:image" content="cover.png">
 
     <!-- ==============================================================================
@@ -419,7 +419,7 @@
                                 <tr>
                                     <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-28 text-slate-800">รหัสวิชา</th>
                                     <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-slate-800">ชื่อรายวิชา</th>
-                                    <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-28 text-slate-800">หน่วยกิต</th>
+                                    <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-24 text-slate-800">หน่วยกิต</th>
                                     <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-28 text-slate-800">ผลการเรียน</th>
                                 </tr>
                             </thead>
@@ -462,7 +462,7 @@
                 <div>
                     <h2 class="text-2xl md:text-3xl font-medium text-slate-800">แดชบอร์ดจัดการข้อมูลส่วนกลาง</h2>
                     <p class="text-slate-500 font-sarabun text-sm mt-1 flex items-center gap-2">
-                        ระดับสิทธิ์การเข้าถึง: <span id="lbl-dash-auth" class="font-medium theme-text">...</span>
+                        ระดับสิทธิ์การเข้าถึง: <span id="lbl-dash-auth" class="font-medium theme-text bg-white px-2 py-0.5 rounded shadow-sm border border-slate-100">...</span>
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-2 w-full lg:w-auto">
@@ -476,7 +476,7 @@
                             <i class="fas fa-filter text-slate-400 group-focus-within:theme-text transition-colors"></i>
                         </div>
                         <select id="dash-term-filter" onchange="SystemEngine.Dashboard.changeTermFilter()" class="w-full appearance-none bg-white border border-slate-200 text-slate-700 font-medium py-2 pl-9 pr-8 rounded-lg outline-none text-sm shadow-sm font-sarabun cursor-pointer hover:border-slate-300">
-                            <option value="ALL">รวมข้อมูลทุกภาคเรียน</option>
+                            <option value="ALL">แสดงข้อมูลรวมทุกภาคเรียน</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <i class="fas fa-chevron-down text-slate-400 text-xs"></i>
@@ -488,7 +488,7 @@
 
             <!-- Stats (Clickable KPIs for Filtering) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div onclick="SystemEngine.Dashboard.filterTable('all')" class="minimal-card p-5 border-l-[4px] border-blue-400 flex flex-col justify-center hover:bg-blue-50 cursor-pointer transition-colors" title="คลิกเพื่อแสดงข้อมูลนักเรียนทั้งหมด">
+                <div id="card-filter-all" onclick="SystemEngine.Dashboard.filterTable('all')" class="minimal-card p-5 border-l-[4px] border-blue-400 flex flex-col justify-center hover:bg-blue-50 cursor-pointer transition-colors ring-2 ring-brand-400" title="คลิกเพื่อแสดงข้อมูลนักเรียนทั้งหมด">
                     <div class="flex justify-between items-start mb-2">
                         <p class="text-xs font-medium text-slate-500 font-sarabun">นักเรียนทั้งหมด</p>
                         <i class="fas fa-users text-blue-400"></i>
@@ -502,7 +502,7 @@
                     </div>
                     <div class="flex items-baseline gap-2"><h3 class="text-2xl font-bold text-slate-800 font-mono" id="dash-kpi-gpa">0.00</h3><span class="text-xs text-slate-400 font-sarabun mb-0.5">ภาพรวม</span></div>
                 </div>
-                <div onclick="SystemEngine.Dashboard.filterTable('failed')" class="minimal-card p-5 border-l-[4px] border-rose-400 flex flex-col justify-center hover:bg-rose-50 cursor-pointer transition-colors" title="คลิกเพื่อกรองเฉพาะนักเรียนที่ติด 0, ร, มส">
+                <div id="card-filter-failed" onclick="SystemEngine.Dashboard.filterTable('failed')" class="minimal-card p-5 border-l-[4px] border-rose-400 flex flex-col justify-center hover:bg-rose-50 cursor-pointer transition-colors" title="คลิกเพื่อกรองเฉพาะนักเรียนที่ติด 0, ร, มส">
                     <div class="flex justify-between items-start mb-2">
                         <p class="text-xs font-medium text-slate-500 font-sarabun">ติด ร/มส/0</p>
                         <i class="fas fa-exclamation-circle text-rose-400"></i>
@@ -527,14 +527,14 @@
                             ระบบ <b class="text-white">เขียนทับ (Overwrite)</b> อัตโนมัติเฉพาะเทอมและปีการศึกษาที่ตรงกัน ข้อมูลเก่าไม่สูญหาย
                         </p>
                         <input type="file" id="inp-file-excel" accept=".xlsx, .xls" class="hidden" onchange="SystemEngine.Excel.handleUpload(event)">
-                        <button onclick="document.getElementById('inp-file-excel').click()" class="btn-fluid w-full bg-white text-slate-800 py-2.5 rounded-lg font-medium text-sm hover:bg-slate-50 transition-colors font-sarabun shadow-sm flex justify-center items-center gap-2">
+                        <button onclick="document.getElementById('inp-file-excel').click()" class="btn-fluid w-full bg-white text-slate-800 py-2.5 rounded-lg font-medium text-sm hover:bg-slate-100 transition-colors font-sarabun shadow-sm flex justify-center items-center gap-2">
                             <i class="fas fa-upload theme-text"></i> อัปโหลดไฟล์ Excel
                         </button>
                     </div>
 
                     <div class="minimal-card p-5 flex flex-col bg-white">
                         <h4 class="font-medium text-slate-700 text-sm font-kanit mb-4 flex items-center gap-2">
-                            <i class="fas fa-chart-bar text-slate-400"></i> การกระจายตัวของเกรด
+                            <i class="fas fa-chart-bar text-slate-400"></i> ทิศทางการกระจายตัวของเกรด
                         </h4>
                         <div class="flex-grow relative h-[200px]"><canvas id="chart-dash-gpa"></canvas></div>
                     </div>
@@ -560,7 +560,7 @@
                                     <th class="py-3 px-5 font-medium text-xs">ชื่อ-นามสกุล</th>
                                     <th class="py-3 px-5 font-medium text-xs text-center">ระดับชั้น</th>
                                     <th class="py-3 px-5 font-medium text-xs text-center">จำนวนวิชา</th>
-                                    <th class="py-3 px-5 font-medium text-xs text-center w-32">ดู/จัดการ</th>
+                                    <th class="py-3 px-5 font-medium text-xs text-center w-36">ดู/จัดการ</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody-db-mgr" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -750,7 +750,8 @@
             auth: { user: null, role: null, access: null },
             db: { raw: [], grouped: {} },
             settings: { name: 'โรงเรียนหนองโกวิชาประสิทธิ์พิทยาคม', color: '#8b5cf6' },
-            temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all' }
+            temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all' },
+            charts: {}
         };
 
         // Cache-Busting API Wrapper (รับประกันดึงข้อมูลใหม่เสมอ ไม่ติดแคช)
@@ -1032,7 +1033,7 @@
                             // ตั้งค่าการแสดงผลสถานะพาสเทล
                             const statusBg = hasIssue ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200';
                             const statusText = hasIssue ? 'text-amber-600' : 'text-emerald-600';
-                            const statusIcon = hasIssue ? '<i class="fas fa-exclamation-circle text-[10px] mr-1"></i> ติด ร/มส/0' : '<i class="fas fa-check-circle text-[10px] mr-1"></i> เกรดออกครบ';
+                            const statusIcon = hasIssue ? '<i class="fas fa-exclamation-circle text-[10px] mr-1"></i> ผลการเรียนไม่ปกติ' : '<i class="fas fa-check-circle text-[10px] mr-1"></i> ผลการเรียนปกติ';
 
                             d.innerHTML = `
                                 <div class="flex items-center gap-4">
@@ -1155,7 +1156,7 @@
                     });
                     
                     const termFilter = document.getElementById('dash-term-filter');
-                    termFilter.innerHTML = '<option value="ALL">แสดงข้อมูลรวมทุกภาคเรียน</option>';
+                    termFilter.innerHTML = '<option value="ALL">รวมทุกภาคเรียน</option>';
                     
                     Array.from(termSet).sort((a,b) => {
                         const [s1,y1]=a.split('/'); const [s2,y2]=b.split('/');
@@ -1175,7 +1176,13 @@
                 filterTable: (type) => {
                     Store.temp.dashboardFilter = type;
                     SystemEngine.Dashboard.renderTable();
-                    // Optional: highlight the active filter card if desired. Currently simple filtering via logic.
+                    
+                    // Highlight active filter card
+                    document.getElementById('card-filter-all').classList.remove('ring-2', 'ring-brand-400');
+                    document.getElementById('card-filter-failed').classList.remove('ring-2', 'ring-rose-400');
+                    
+                    if(type === 'all') document.getElementById('card-filter-all').classList.add('ring-2', 'ring-brand-400');
+                    if(type === 'failed') document.getElementById('card-filter-failed').classList.add('ring-2', 'ring-rose-400');
                 },
                 showClassSummary: () => {
                     const term = Store.temp.dashboardTerm;
@@ -1186,8 +1193,7 @@
                     const arr = Object.values(Store.db.grouped);
                     const authArr = Store.auth.role === 'admin' ? arr : arr.filter(s => s.personal.class === Store.auth.access);
                     
-                    // รวบรวมวิชาทั้งหมดในเทอมนั้น
-                    const subjectsMap = new Map(); // รหัสวิชา -> ชื่อวิชา
+                    const subjectsMap = new Map(); 
                     
                     const summaryData = authArr.map(s => {
                         const termSubs = s.subjects.filter(sub => sub.semester === term.split('/')[0] && sub.year === term.split('/')[1]);
@@ -1215,7 +1221,6 @@
                         return SystemEngine.Utils.toast('แจ้งเตือน', 'ไม่พบข้อมูลในภาคเรียนที่เลือก', 'warning');
                     }
                     
-                    // สร้าง HTML ตาราง CrossTab แนวนอน
                     const subCodes = Array.from(subjectsMap.keys()).sort();
                     
                     let html = `<table class="w-full text-left font-sarabun text-sm border-collapse whitespace-nowrap table-crosstab">`;
@@ -1359,6 +1364,7 @@
                                         <td class="py-3 px-5 text-center border-b border-slate-100">
                                             <div class="flex items-center justify-center gap-2">
                                                 <button onclick="SystemEngine.Router.navigate('transcript', '${p.id}')" class="text-blue-500 hover:text-blue-700 transition-colors bg-blue-50 w-8 h-8 rounded-lg hover:bg-blue-100 shadow-sm" title="ดูผลการเรียน"><i class="fas fa-eye text-xs"></i></button>
+                                                <button onclick="SystemEngine.Dashboard.edit('${p.id}')" class="text-amber-500 hover:text-amber-700 transition-colors bg-amber-50 w-8 h-8 rounded-lg hover:bg-amber-100 shadow-sm" title="แก้ไขข้อมูลเบื้องต้น"><i class="fas fa-edit text-xs"></i></button>
                                                 <button onclick="SystemEngine.Dashboard.del('${p.id}')" class="text-rose-400 hover:text-rose-600 transition-colors bg-rose-50 w-8 h-8 rounded-lg hover:bg-rose-100 shadow-sm" title="ลบข้อมูล"><i class="fas fa-trash-alt text-xs"></i></button>
                                             </div>
                                         </td>
@@ -1373,14 +1379,76 @@
                     if(count === 0) { tbody.parentElement.classList.add('hidden'); empty.classList.remove('hidden'); }
                     else { tbody.parentElement.classList.remove('hidden'); empty.classList.add('hidden'); }
                 },
+                edit: (id) => {
+                    const student = Store.db.grouped[id];
+                    if(!student) return;
+                    Swal.fire({
+                        title: 'แก้ไขข้อมูลนักเรียน',
+                        html: `
+                            <div class="text-left font-sarabun text-sm space-y-3 mt-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">รหัสประจำตัว</label>
+                                    <input id="edit-id" class="w-full bg-slate-100 border border-slate-200 rounded-lg px-3 py-2 text-slate-500 cursor-not-allowed" value="${student.personal.id}" disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">ชื่อ-นามสกุล</label>
+                                    <input id="edit-name" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 focus:border-brand-500 outline-none" value="${student.personal.name}">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-500 mb-1">ระดับชั้น</label>
+                                        <input id="edit-class" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 focus:border-brand-500 outline-none" value="${student.personal.class}">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-500 mb-1">ห้อง</label>
+                                        <input id="edit-room" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 focus:border-brand-500 outline-none" value="${student.personal.room || ''}">
+                                    </div>
+                                </div>
+                                <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-xs flex gap-2 items-start">
+                                    <i class="fas fa-info-circle mt-0.5"></i>
+                                    <span>การแก้ไข <b>เกรดรายวิชา</b> กรุณาอัปโหลดไฟล์ Excel ปพ.5 ของนักเรียนรายนี้ซ้ำผ่านหน้าแดชบอร์ด ระบบจะอัปเดตข้อมูลให้อัตโนมัติครับ</span>
+                                </div>
+                            </div>
+                        `,
+                        showCancelButton: true,
+                        confirmButtonText: 'บันทึกข้อมูล',
+                        cancelButtonText: 'ยกเลิก',
+                        confirmButtonColor: Store.settings.color || '#6366f1',
+                        preConfirm: () => {
+                            return {
+                                name: document.getElementById('edit-name').value,
+                                class: document.getElementById('edit-class').value,
+                                room: document.getElementById('edit-room').value
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            student.personal.name = result.value.name;
+                            student.personal.class = result.value.class;
+                            student.personal.room = result.value.room;
+                            
+                            Swal.fire({title:'กำลังบันทึก...', didOpen:()=>Swal.showLoading()});
+                            
+                            setTimeout(() => {
+                                SystemEngine.Dashboard.renderTable();
+                                Swal.fire('สำเร็จ', 'แก้ไขข้อมูลพื้นฐานเรียบร้อยแล้ว', 'success');
+                            }, 800);
+                        }
+                    });
+                },
                 del: async (id) => {
                     const r = await Swal.fire({ title: 'ยืนยันลบ?', text: `ลบข้อมูลรหัส ${id}`, icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'ลบ', cancelButtonText: 'ยกเลิก' });
                     if(r.isConfirmed) {
                         Swal.fire({title:'Deleting...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
                         try {
-                            await CloudAPI.post({ action: 'deleteStudent', studentId: id });
-                            SystemEngine.Utils.toast('Deleted', `ลบข้อมูลรหัส ${id} สำเร็จ`, 'success');
-                            SystemEngine.DB.load(); // reload completely
+                            if (!Store.temp.isOffline) {
+                                await CloudAPI.post({ action: 'deleteStudent', studentId: id });
+                                SystemEngine.Utils.toast('Deleted', `ลบข้อมูลรหัส ${id} สำเร็จ`, 'success');
+                                SystemEngine.DB.load(); // reload completely
+                            } else {
+                                SystemEngine.Utils.toast('Offline', `ลบ ${id} สำเร็จ (จำลอง)`, 'success'); 
+                                Swal.close();
+                            }
                         } catch (err) {
                             Swal.fire('Error', String(err), 'error');
                         }
@@ -1580,46 +1648,6 @@
                             } catch (err) { Swal.fire('Error', String(err), 'error'); }
                         }
                     });
-                }
-            },
-            
-            Export: {
-                toPDF: (elementId, filename) => {
-                    const element = document.getElementById(elementId);
-                    if(!element) return;
-                    Swal.fire({ title: 'สร้าง PDF...', allowOutsideClick: false, didOpen:()=>Swal.showLoading() });
-                    element.classList.add('pdf-export-mode');
-                    const opt = { margin: [15, 10, 15, 10], filename: `${filename}.pdf`, image: { type: 'jpeg', quality: 1.0 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
-                    setTimeout(() => {
-                        html2pdf().set(opt).from(element).save().then(() => {
-                            element.classList.remove('pdf-export-mode'); Swal.close();
-                        });
-                    }, 500);
-                },
-                toExcel: () => {
-                    if (Object.keys(Store.db.grouped).length === 0) return;
-                    Swal.fire({ title: 'Exporting...', allowOutsideClick: false, didOpen:()=>Swal.showLoading() });
-                    const exportData = [];
-                    Object.values(Store.db.grouped).forEach(s => {
-                        s.subjects.forEach(sub => {
-                            exportData.push({ 'รหัส': s.personal.id, 'ชื่อ': s.personal.name, 'ชั้น': s.personal.class, 'เทอม': sub.semester+'/'+sub.year, 'รหัสวิชา': sub.subjectCode, 'วิชา': sub.subjectName, 'หน่วยกิต': sub.credits, 'เกรด': sub.grade });
-                        });
-                    });
-                    setTimeout(() => {
-                        const ws = XLSX.utils.json_to_sheet(exportData);
-                        const wb = XLSX.utils.book_new();
-                        XLSX.utils.book_append_sheet(wb, ws, "Data");
-                        XLSX.writeFile(wb, "Export.xlsx");
-                        Swal.close();
-                    }, 500);
-                },
-                summaryToExcel: () => {
-                    const container = document.getElementById('summary-table-container');
-                    const table = container.querySelector('table');
-                    if(!table) return;
-                    const wb = XLSX.utils.table_to_book(table, {sheet: "Summary"});
-                    const term = document.getElementById('lbl-summary-term').innerText.replace('/', '-');
-                    XLSX.writeFile(wb, `Grade_Summary_${term}.xlsx`);
                 }
             }
         };

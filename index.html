@@ -222,7 +222,7 @@
          [5] NAVIGATION 
     =============================================================================== -->
     <header class="glass-nav sticky top-0 z-50 no-print" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+        <div class="w-full max-w-[96%] xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
             
             <div class="flex items-center gap-3 cursor-pointer group" onclick="SystemEngine.Router.navigate('home')">
                 <div class="w-10 h-10 flex items-center justify-center rounded-xl theme-bg text-white shadow-sm transition-transform group-hover:scale-105">
@@ -267,7 +267,7 @@
     <!-- ==============================================================================
          [6] APPLICATION VIEWS
     =============================================================================== -->
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 opacity-0 transition-opacity duration-500" id="main-content">
+    <main class="flex-grow w-full max-w-[96%] xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 opacity-0 transition-opacity duration-500" id="main-content">
         
         <!-- VIEW 1: HOME -->
         <div id="view-home" class="app-view hidden animate-slide-up">
@@ -285,7 +285,7 @@
 
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4" id="grid-classes"></div>
 
-            <div id="section-student-directory" class="hidden mt-12 max-w-4xl mx-auto animate-fade-in">
+            <div id="section-student-directory" class="hidden mt-12 max-w-6xl mx-auto animate-fade-in">
                 <div class="minimal-card p-6 md:p-8">
                     <div class="flex justify-between items-center mb-6">
                         <div>
@@ -311,7 +311,7 @@
 
         <!-- VIEW 2: TRANSCRIPT -->
         <div id="view-transcript" class="app-view hidden animate-fade-in">
-            <div class="max-w-4xl mx-auto" id="transcript-export-container">
+            <div class="max-w-5xl mx-auto" id="transcript-export-container">
                 
                 <div class="flex flex-wrap justify-between items-center mb-4 no-print gap-3">
                     <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-500 hover:text-slate-800 font-sarabun text-sm flex items-center gap-1 font-medium bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
@@ -486,7 +486,7 @@
                         <h3 class="font-medium text-slate-700 text-sm font-kanit">จัดการข้อมูล <span id="lbl-table-count" class="ml-1 text-xs bg-slate-200 px-1.5 rounded">0</span></h3>
                         <input type="text" id="inp-table-search" oninput="SystemEngine.Dashboard.renderTable()" class="bg-white border border-slate-200 rounded px-3 py-1 text-xs font-sarabun outline-none w-40" placeholder="ค้นหารหัส/ชื่อ...">
                     </div>
-                    <div class="overflow-x-auto max-h-[300px] custom-scrollbar">
+                    <div class="overflow-x-auto max-h-[450px] custom-scrollbar">
                         <table class="w-full text-left font-sarabun text-sm whitespace-nowrap">
                             <thead class="bg-white sticky top-0 border-b border-slate-200 text-slate-500 z-10">
                                 <tr>
@@ -630,18 +630,18 @@
             VERSION: '9.0.0 Formal Edition',
             // 🚨 ใส่ Web App URL ของคุณที่นี่ (ต้องเป็น Backend V.8)
             GAS_URL: 'https://script.google.com/macros/s/AKfycbwJ3nyXQPkbm51Wu3iNnfYVsU9HPWIq6_B4iVWlocs9BsGt6OV-Ar36zcsVq7jYkdgf5g/exec',
-            CLASS_LIST: ['ม.1', 'ม.2', 'ม.3', 'ม.4', 'ม.5', 'ม.6'],
+            CLASS_LIST: ['ชั้นมัธยมศึกษาปีที่ 1', 'ชั้นมัธยมศึกษาปีที่ 2', 'ชั้นมัธยมศึกษาปีที่ 3', 'ชั้นมัธยมศึกษาปีที่ 4', 'ชั้นมัธยมศึกษาปีที่ 5', 'ชั้นมัธยมศึกษาปีที่ 6'],
             VALID_GRADES: ['0','1','1.5','2','2.5','3','3.5','4','ร','มส','ผ','มผ']
         };
 
         const ROLES_MAP = {
             'Admin': { pass: '66440763', role: 'admin', label: 'ผู้ดูแลระบบ', access: 'ALL' },
-            'Nongko001': { pass: 'Nongko001', role: 'teacher', label: 'ครู ม.1', access: 'ม.1' },
-            'Nongko002': { pass: 'Nongko002', role: 'teacher', label: 'ครู ม.2', access: 'ม.2' },
-            'Nongko003': { pass: 'Nongko003', role: 'teacher', label: 'ครู ม.3', access: 'ม.3' },
-            'Nongko004': { pass: 'Nongko004', role: 'teacher', label: 'ครู ม.4', access: 'ม.4' },
-            'Nongko005': { pass: 'Nongko005', role: 'teacher', label: 'ครู ม.5', access: 'ม.5' },
-            'Nongko006': { pass: 'Nongko006', role: 'teacher', label: 'ครู ม.6', access: 'ม.6' }
+            'Nongko001': { pass: 'Nongko001', role: 'teacher', label: 'ครูประจำชั้นมัธยมศึกษาปีที่ 1', access: 'ชั้นมัธยมศึกษาปีที่ 1' },
+            'Nongko002': { pass: 'Nongko002', role: 'teacher', label: 'ครูประจำชั้นมัธยมศึกษาปีที่ 2', access: 'ชั้นมัธยมศึกษาปีที่ 2' },
+            'Nongko003': { pass: 'Nongko003', role: 'teacher', label: 'ครูประจำชั้นมัธยมศึกษาปีที่ 3', access: 'ชั้นมัธยมศึกษาปีที่ 3' },
+            'Nongko004': { pass: 'Nongko004', role: 'teacher', label: 'ครูประจำชั้นมัธยมศึกษาปีที่ 4', access: 'ชั้นมัธยมศึกษาปีที่ 4' },
+            'Nongko005': { pass: 'Nongko005', role: 'teacher', label: 'ครูประจำชั้นมัธยมศึกษาปีที่ 5', access: 'ชั้นมัธยมศึกษาปีที่ 5' },
+            'Nongko006': { pass: 'Nongko006', role: 'teacher', label: 'ครูประจำชั้นมัธยมศึกษาปีที่ 6', access: 'ชั้นมัธยมศึกษาปีที่ 6' }
         };
 
         const Store = {
@@ -1199,6 +1199,17 @@
                         if(numMatch >= 1) { creditRow = r; break; }
                     }
 
+                    let totalCreditsFound = 0.0;
+                    if (firstSubCol > 0) {
+                        for(let c = firstSubCol - 1; c >= 0; c--) {
+                            const val = parseFloat(mat[creditRow][c]);
+                            if(!isNaN(val) && val >= 1.0 && val <= 50.0) { 
+                                totalCreditsFound = val.toFixed(1); 
+                                break; 
+                            }
+                        }
+                    }
+
                     let idCol = -1, nameCol = -1;
                     for(let i=0; i<=subRow; i++) {
                         if(!mat[i]) continue;
@@ -1332,7 +1343,7 @@
                 clearData: () => {
                     const cls = document.getElementById('cfg-clear-class').value;
                     if(!cls) return;
-                    Swal.fire({ title:'อันตราย!', text:`ล้างข้อมูล ${cls} ถาวร?`, icon:'warning', showCancelButton:true, confirmButtonColor:'#e11d48' })
+                    Swal.fire({ title:'โปรดระวัง', text:`ล้างข้อมูล ${cls} ถาวร?`, icon:'warning', showCancelButton:true, confirmButtonColor:'#e11d48' })
                     .then(async r => {
                         if(r.isConfirmed) {
                             Swal.fire({title:'Clearing...', allowOutsideClick: false, didOpen:()=>Swal.showLoading()});

@@ -9,12 +9,12 @@
          [META TAGS สำหรับ Social Media & การแชร์ (LINE, Facebook)]
     =============================================================================== -->
     <title>ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม</title>
-    <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์สำหรับนักเรียน">
+    <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ สำหรับนักเรียนและผู้ปกครอง">
     
     <!-- Open Graph (Facebook, LINE) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม">
-    <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์">
+    <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ ระบบวิเคราะห์อัจฉริยะ">
     <!-- ระบุภาพปก cover.png ที่จะอัปโหลดไว้ระดับเดียวกับไฟล์ index.html ใน Github -->
     <meta property="og:image" content="cover.png">
     
@@ -724,7 +724,7 @@
         window.onerror = function(msg) {
             console.error('[System Error]:', msg);
             SystemEngine.UI.safeHideSplash();
-            Swal.fire('ข้อผิดพลาดการเชื่อมต่อ', msg, 'error');
+            // Swal.fire('ข้อผิดพลาดการเชื่อมต่อ', msg, 'error'); // ปิดการแจ้งเตือนชั่วคราวเพื่อไม่ให้กวนใจผู้ใช้
             return false; 
         };
 
@@ -751,7 +751,7 @@
             db: { raw: [], grouped: {} },
             settings: { name: 'โรงเรียนหนองโกวิชาประสิทธิ์พิทยาคม', color: '#8b5cf6' },
             temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all' },
-            charts: {}
+            charts: {} // เพิ่มตัวแปรสำหรับเก็บข้อมูลกราฟ
         };
 
         // Cache-Busting API Wrapper (รับประกันดึงข้อมูลใหม่เสมอ ไม่ติดแคช)
@@ -992,7 +992,7 @@
 
                     SYS_CONFIG.CLASS_LIST.forEach(c => {
                         const div = document.createElement('div');
-                        div.className = "minimal-card p-6 text-center cursor-pointer hover:border-slate-300 transition-colors";
+                        div.className = "minimal-card p-6 text-center cursor-pointer hover:border-blue-300 transition-colors";
                         div.onclick = () => SystemEngine.Home.showDirectory(c);
                         div.innerHTML = `
                             <div class="w-14 h-14 mx-auto rounded-2xl bg-slate-50 flex items-center justify-center text-2xl text-slate-400 mb-4 border border-slate-100 shadow-sm transition-all group-hover:theme-text group-hover:scale-105">
@@ -1031,9 +1031,12 @@
                             });
 
                             // ตั้งค่าการแสดงผลสถานะพาสเทล
-                            const statusBg = hasIssue ? 'bg-amber-50 border-amber-200' : 'bg-emerald-50 border-emerald-200';
-                            const statusText = hasIssue ? 'text-amber-600' : 'text-emerald-600';
-                            const statusIcon = hasIssue ? '<i class="fas fa-exclamation-circle text-[10px] mr-1"></i> ผลการเรียนไม่ปกติ' : '<i class="fas fa-check-circle text-[10px] mr-1"></i> ผลการเรียนปกติ';
+                            let statusBadge = '';
+                            if (hasIssue) {
+                                statusBadge = `<div class="flex flex-col items-end"><span class="flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded border leading-none shadow-sm bg-amber-50 border-amber-300 text-amber-700"><i class="fas fa-exclamation-circle text-[10px] mr-1"></i> ผลการเรียนไม่ปกติ</span><span class="text-[8px] bg-amber-100 text-amber-800 px-1.5 rounded mt-0.5 font-bold">ติด ร/มส/0</span></div>`;
+                            } else {
+                                statusBadge = `<div class="text-[9px] font-bold px-1.5 py-0.5 rounded border leading-none shadow-sm bg-emerald-50 border-emerald-300 text-emerald-700"><i class="fas fa-check-circle text-[10px] mr-1"></i> ผลการเรียนปกติ</div>`;
+                            }
 
                             d.innerHTML = `
                                 <div class="flex items-center gap-4">
@@ -1044,7 +1047,7 @@
                                         <div class="font-medium text-slate-800 text-sm group-hover:theme-text transition-colors">${s.personal.name}</div>
                                         <div class="flex items-center gap-2 mt-1.5">
                                             <div class="text-[11px] text-slate-500 font-mono bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100 leading-none">${s.personal.id}</div>
-                                            <div class="text-[9px] font-bold px-1.5 py-0.5 rounded border leading-none shadow-sm ${statusBg} ${statusText}">${statusIcon}</div>
+                                            ${statusBadge}
                                         </div>
                                     </div>
                                 </div>
@@ -1119,6 +1122,7 @@
                         else if(['3','2.5'].includes(gStr)) tClass = "grade-b";
                         else tClass = "grade-c";
 
+                        // ซ่อนขีด - ในตารางถ้าวิชานั้นไม่มีรหัส (เช่น หน้าที่พลเมือง)
                         const displayCode = s.subjectCode && s.subjectCode !== '-' && s.subjectCode !== 'กิจกรรม' ? s.subjectCode : '';
 
                         tbody.innerHTML += `
@@ -1156,7 +1160,7 @@
                     });
                     
                     const termFilter = document.getElementById('dash-term-filter');
-                    termFilter.innerHTML = '<option value="ALL">รวมทุกภาคเรียน</option>';
+                    termFilter.innerHTML = '<option value="ALL">แสดงข้อมูลรวมทุกภาคเรียน</option>';
                     
                     Array.from(termSet).sort((a,b) => {
                         const [s1,y1]=a.split('/'); const [s2,y2]=b.split('/');
@@ -1298,11 +1302,13 @@
                     document.getElementById('dash-kpi-record').innerText = tRecs;
 
                     // Update Dynamic Bar Chart for Distribution
-                    const ctxB = document.getElementById('chart-dash-gpa').getContext('2d');
+                    const ctxB = document.getElementById('chart-dash-gpa');
+                    if (!ctxB) return;
+                    
                     if(Store.charts.dBar) Store.charts.dBar.destroy();
                     
                     Chart.defaults.font.family = "'Kanit', sans-serif";
-                    Store.charts.dBar = new Chart(ctxB, { 
+                    Store.charts.dBar = new Chart(ctxB.getContext('2d'), { 
                         type:'bar', 
                         data:{
                             labels:['3.5 - 4.0 (ดีเยี่ยม)', '3.0 - 3.49 (ดี)', '2.0 - 2.99 (พอใช้)', '1.0 - 1.99 (ผ่าน)', '<1.0 / ร / มส (ปรับปรุง)'], 
@@ -1441,14 +1447,9 @@
                     if(r.isConfirmed) {
                         Swal.fire({title:'Deleting...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
                         try {
-                            if (!Store.temp.isOffline) {
-                                await CloudAPI.post({ action: 'deleteStudent', studentId: id });
-                                SystemEngine.Utils.toast('Deleted', `ลบข้อมูลรหัส ${id} สำเร็จ`, 'success');
-                                SystemEngine.DB.load(); // reload completely
-                            } else {
-                                SystemEngine.Utils.toast('Offline', `ลบ ${id} สำเร็จ (จำลอง)`, 'success'); 
-                                Swal.close();
-                            }
+                            await CloudAPI.post({ action: 'deleteStudent', studentId: id });
+                            SystemEngine.Utils.toast('Deleted', `ลบข้อมูลรหัส ${id} สำเร็จ`, 'success');
+                            SystemEngine.DB.load(); // reload completely
                         } catch (err) {
                             Swal.fire('Error', String(err), 'error');
                         }

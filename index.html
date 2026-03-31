@@ -7,21 +7,27 @@
     
     <!-- ==============================================================================
          [META TAGS สำหรับ Social Media & การแชร์ (LINE, Facebook)]
+         🚨 แก้ไข: ใส่ Absolute URL เพื่อให้ระบบ Social Media หาภาพปกเจอแน่นอน
     =============================================================================== -->
     <title>ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม</title>
     <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ สำหรับนักเรียนและผู้ปกครอง">
     
     <!-- Open Graph (Facebook, LINE) -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://student-academic-nongkowichaprasitr.vercel.app/">
     <meta property="og:title" content="ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม">
     <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ ระบบวิเคราะห์อัจฉริยะ">
-    <meta property="og:image" content="cover.png">
+    <meta property="og:image" content="https://student-academic-nongkowichaprasitr.vercel.app/cover.png">
+    <meta property="og:image:secure_url" content="https://student-academic-nongkowichaprasitr.vercel.app/cover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://student-academic-nongkowichaprasitr.vercel.app/">
     <meta name="twitter:title" content="ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม">
     <meta name="twitter:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์">
-    <meta name="twitter:image" content="cover.png">
+    <meta name="twitter:image" content="https://student-academic-nongkowichaprasitr.vercel.app/cover.png">
 
     <!-- ==============================================================================
          [1] CORE LIBRARIES
@@ -91,7 +97,7 @@
             --bg-mode: #f8fafc;
         }
 
-        /* ✨ พื้นหลังไล่สี กรม-ม่วง-ชมพู พาสเทล บังคับ 100vh กันหลุด */
+        /* ✨ อัปเดตพื้นหลังไล่สี กรม-ม่วง-ชมพู พาสเทล ครอบคลุมทั้งหน้าเว็บ */
         html, body {
             background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #fce7f3 100%);
             background-size: 200% 200%;
@@ -104,9 +110,9 @@
             min-height: 100vh;
         }
 
-        /* ปรับปรุง Scrollbar ให้สวยงามมินิมอล */
-        ::-webkit-scrollbar { width: 6px; height: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        /* ปรับปรุง Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background-color: var(--theme-primary); }
 
@@ -116,24 +122,22 @@
 
         .glass-nav {
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
 
         .minimal-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
             border-radius: 1rem;
             transition: all 0.2s ease;
         }
         .minimal-card:hover {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border-color: #ffffff;
+            border-color: #cbd5e1;
         }
 
         .theme-bg { background-color: var(--theme-primary) !important; color: #ffffff !important; }
@@ -141,6 +145,7 @@
         .theme-border { border-color: var(--theme-primary) !important; }
         .theme-ring:focus-within { box-shadow: 0 0 0 2px var(--theme-light), 0 0 0 1px var(--theme-primary); outline: none; border-color: transparent !important; }
 
+        /* สีเกรดทางการ */
         .grade-a { color: #059669; font-weight: 700; }
         .grade-b { color: #2563eb; font-weight: 600; }
         .grade-c { color: #d97706; font-weight: 600; }
@@ -164,7 +169,7 @@
             animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
         }
 
-        /* ✨ ตารางสรุปผลการเรียน (CrossTab) ที่ปรับให้ล็อคหัวตารางและชื่อได้สมบูรณ์แบบ */
+        /* ✨ ตารางสรุปผลการเรียน (CrossTab) ที่ปรับให้ล็อคหัวตารางและชื่อได้สมบูรณ์แบบ แถบเลื่อนบน-ล่างซ้ายขวา */
         .table-crosstab {
             border-collapse: separate;
             border-spacing: 0;
@@ -174,10 +179,10 @@
             text-align: center;
             border-right: 1px solid #e2e8f0;
             border-bottom: 1px solid #e2e8f0;
-            padding: 8px;
+            padding: 6px; /* ลด padding เพื่อให้กะทัดรัดขึ้น */
             white-space: nowrap;
         }
-        /* ล็อคแถวบนสุด (Header) */
+        /* ล็อคแถวบนสุด (Header) ให้เลื่อนลงแล้วยังเห็น */
         .table-crosstab thead th {
             position: sticky;
             top: 0;
@@ -186,24 +191,25 @@
             font-weight: 600;
             z-index: 20;
             border-top: 1px solid #e2e8f0;
+            box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1);
         }
-        /* ล็อคคอลัมน์รหัสและชื่อ (ซ้ายสุด) */
+        /* ล็อคคอลัมน์รหัสและชื่อ (ซ้ายสุด) ให้เลื่อนขวาแล้วยังเห็น */
         .table-crosstab th:nth-child(1), .table-crosstab td:nth-child(1) {
-            position: sticky; left: 0; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 80px;
+            position: sticky; left: 0; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 70px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1);
         }
         .table-crosstab th:nth-child(2), .table-crosstab td:nth-child(2) {
-            position: sticky; left: 80px; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 160px;
+            position: sticky; left: 70px; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 140px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1);
         }
-        /* มุมซ้ายบนสุด ต้องมี Z-index สูงสุดกันการทับซ้อน */
+        /* มุมซ้ายบนสุด ต้องมี Z-index สูงสุดกันการทับซ้อนเวลาเลื่อนบนและซ้ายพร้อมกัน */
         .table-crosstab thead th:nth-child(1), .table-crosstab thead th:nth-child(2) {
             z-index: 30;
         }
-        /* การ hover แถว */
+        /* การ hover แถว ให้สีเปลี่ยนทั้งแถวรวมถึงคอลัมน์ที่ล็อคไว้ */
         .table-crosstab tbody tr:hover td {
             background-color: #f8fafc;
         }
         .table-crosstab tbody tr:hover td:nth-child(1), .table-crosstab tbody tr:hover td:nth-child(2) {
-            background-color: #e2e8f0; /* ให้คอลัมน์ที่ล็อคเปลี่ยนสีตามด้วย */
+            background-color: #e2e8f0; 
         }
 
         /* ====================================================================
@@ -251,6 +257,7 @@
                 color: #000 !important; font-size: 14pt !important;
             }
             
+            /* ลบแถบสีตอนพริ้นให้ดูเป็นทางการ */
             .print-exact { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .grade-a, .grade-b, .grade-c, .grade-f, .grade-s { color: #000 !important; }
         }
@@ -286,7 +293,7 @@
         </div>
     </div>
 
-    <!-- ✨ Ambient Glow สำหรับดวงไฟลอยพาสเทล (ลบ hidden ออกแล้วเพื่อให้โชว์แสงสวยๆ) -->
+    <!-- ✨ Ambient Glow สำหรับดวงไฟลอยพาสเทล -->
     <div id="bg-ambience" class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none no-print">
         <div class="absolute top-[-10%] left-[-10%] w-[60rem] h-[60rem] bg-indigo-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-float-slow"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[50rem] h-[50rem] bg-pink-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-float-slow" style="animation-delay: 2s"></div>
@@ -391,14 +398,14 @@
             <div class="max-w-[1100px] mx-auto" id="transcript-export-container">
                 
                 <div class="flex flex-wrap justify-between items-center mb-4 no-print gap-3">
-                    <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
+                    <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
                         <i class="fas fa-chevron-left text-xs"></i> กลับสู่หน้าหลัก
                     </button>
                     <div class="flex gap-2">
-                        <button onclick="SystemEngine.Export.toExcel()" class="bg-white/90 backdrop-blur text-emerald-600 border border-emerald-200 hover:bg-emerald-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
+                        <button onclick="SystemEngine.Export.toExcel()" class="bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
                             <i class="fas fa-file-excel"></i> ส่งออกข้อมูล (Excel)
                         </button>
-                        <button onclick="SystemEngine.Export.toPDF('transcript-export-container', 'Transcript')" class="bg-white/90 backdrop-blur text-rose-500 border border-rose-200 hover:bg-rose-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
+                        <button onclick="SystemEngine.Export.toPDF('transcript-export-container', 'Transcript')" class="bg-white text-rose-500 border border-rose-200 hover:bg-rose-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
                             <i class="fas fa-file-pdf"></i> บันทึก PDF
                         </button>
                         <button onclick="window.print()" class="theme-bg text-white px-5 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun btn-minimal">
@@ -630,8 +637,8 @@
                                 <tbody id="tbody-db-mgr" class="divide-y divide-slate-100 bg-white"></tbody>
                             </table>
                         </div>
-                        <!-- Empty State - แก้ไขให้จัดกลางและไม่บดบัง Scrollbar เมื่อไม่พบข้อมูล -->
-                        <div id="state-table-empty" class="hidden flex-col items-center justify-center text-slate-400 bg-white/95 backdrop-blur h-full w-full absolute inset-0 z-20 rounded-b-[1rem]">
+                        <!-- Empty State - จัดตำแหน่งให้สมบูรณ์แบบไม่ขี่กับตาราง -->
+                        <div id="state-table-empty" class="hidden flex-col items-center justify-center text-slate-400 bg-white h-full w-full absolute inset-0 z-20">
                             <div class="w-20 h-20 bg-slate-50 rounded-full shadow-sm flex items-center justify-center mb-4 border border-slate-100">
                                 <i class="fas fa-inbox text-4xl text-slate-300"></i>
                             </div>
@@ -755,12 +762,12 @@
         </div>
     </div>
 
-    <!-- ✨ Modal: ตารางสรุปผลการเรียนรวมสำหรับครู (กางเต็มจอ มี Scroll ซ้ายขวา-บนล่าง) -->
+    <!-- ✨ Modal: ตารางสรุปผลการเรียนรวมสำหรับครู (กางเต็มจอ ฟอนต์เล็ก แถบเลื่อนคู่ ซ้ายขวา-บนล่าง) -->
     <div id="modal-summary" class="fixed inset-0 z-[150] hidden flex items-center justify-center p-2 sm:p-4">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="SystemEngine.UI.closeModal('modal-summary')"></div>
         <div class="relative w-full h-full md:w-[98vw] md:h-[95vh] max-w-[1800px] z-10 flex flex-col">
             <div class="minimal-card w-full h-full flex flex-col overflow-hidden bg-white">
-                <div class="px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-50 shrink-0">
+                <div class="px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-50 shrink-0 z-30 relative">
                     <div>
                         <h3 class="text-base md:text-lg font-medium text-slate-800 font-kanit">ตารางสรุปผลการเรียนรวม (Class Summary)</h3>
                         <p class="text-xs md:text-sm text-slate-500 font-sarabun mt-0.5">ข้อมูลผลการเรียนภาคเรียนที่ <span id="lbl-summary-term" class="font-bold theme-text bg-white px-2 rounded border border-slate-200 shadow-sm"></span></p>
@@ -774,12 +781,15 @@
                 </div>
                 
                 <!-- แถบเลื่อนด้านบนสำหรับตารางกว้างๆ -->
-                <div id="summary-top-scroll" class="overflow-x-auto w-full hidden custom-scrollbar bg-slate-50 border-b border-slate-200">
+                <div id="summary-top-scroll" class="overflow-x-auto w-full hidden custom-scrollbar bg-slate-100 border-b border-slate-300 z-30 relative">
                     <div id="summary-top-scroll-content" class="h-[1px]"></div>
                 </div>
 
-                <div class="flex-grow overflow-auto p-4 bg-white custom-scrollbar w-full relative" id="summary-table-container" onscroll="document.getElementById('summary-top-scroll').scrollLeft = this.scrollLeft;">
-                    <!-- Data injected here -->
+                <!-- Container สำหรับแสดงผลตาราง ต้องใช้โครงสร้างนี้เพื่อล็อคแกนให้สมบูรณ์ -->
+                <div class="flex-grow p-4 md:p-6 bg-slate-50 w-full flex flex-col overflow-hidden">
+                    <div id="summary-table-container" class="w-full">
+                        <!-- Data injected here via JS -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -809,7 +819,7 @@
         };
 
         const SYS_CONFIG = {
-            VERSION: '10.2.0 Cloud Realtime Pro Max',
+            VERSION: '10.2.1 Cloud Realtime Pro Max',
             // 🚨 ใส่ Web App URL ของคุณที่นี่
             GAS_URL: 'https://script.google.com/macros/s/AKfycbwJ3nyXQPkbm51Wu3iNnfYVsU9HPWIq6_B4iVWlocs9BsGt6OV-Ar36zcsVq7jYkdgf5g/exec',
             // ✅ ใช้ "ม.1" ถึง "ม.6" เพื่อให้ตรงกับข้อมูลใน Excel ที่วิเคราะห์แล้ว
@@ -1127,7 +1137,7 @@
                                 if(['0','ร','มส','มผ','ผ'].includes(String(sub.grade).trim())) hasIssue = true;
                             });
 
-                            // ตั้งค่าการแสดงผลสถานะพาสเทลให้ชัดเจนตามที่ผู้ใช้ต้องการ
+                            // ป้ายกำกับผลการเรียนสีพาสเทล
                             let statusBadge = '';
                             if (hasIssue) {
                                 statusBadge = `<div class="flex flex-col items-start mt-1.5">
@@ -1372,33 +1382,34 @@
                     
                     const subCodes = Array.from(subjectsMap.keys()).sort();
                     
-                    // สร้าง HTML ตารางให้ทางการและกว้าง (ปรับฟอนต์ให้เล็กลงเพื่อให้เห็นภาพรวม)
-                    let html = `<div class="border border-slate-300 rounded-lg shadow-sm overflow-hidden"><table class="w-full text-left font-sarabun text-[11px] md:text-[12px] border-collapse whitespace-nowrap table-crosstab">`;
+                    // สร้าง HTML ตารางสรุป (CrossTab)
+                    let html = `<div class="overflow-auto w-full max-h-[65vh] border border-slate-300 rounded-lg shadow-sm custom-scrollbar" id="inner-summary-container">
+                                <table class="w-full text-left font-sarabun text-[10px] md:text-[11px] table-crosstab min-w-[1000px]">`;
                     html += `<thead><tr>`;
-                    html += `<th class="py-2 px-3 border-b border-slate-300 text-slate-800">รหัสประจำตัว</th>`;
+                    html += `<th class="py-2 px-3 border-b border-r border-slate-300 text-slate-800">รหัสประจำตัว</th>`;
                     html += `<th class="py-2 px-3 border-b border-r border-slate-300 text-slate-800">ชื่อ-นามสกุล</th>`;
                     subCodes.forEach(code => {
-                        html += `<th class="py-2 px-2 border-b border-r border-slate-300 text-center font-mono text-[10px] text-slate-800" title="${subjectsMap.get(code)}">${code}</th>`;
+                        html += `<th class="py-2 px-2 border-b border-r border-slate-300 text-center font-mono text-[9px] text-slate-800" title="${subjectsMap.get(code)}">${code}</th>`;
                     });
                     html += `<th class="py-2 px-3 text-center text-brand-700 bg-brand-50 border-b border-r border-slate-300">GPA</th>`;
                     html += `<th class="py-2 px-3 text-center text-slate-700 border-b border-slate-300">จัดการ</th></tr></thead>`;
                     
-                    html += `<tbody class="divide-y divide-slate-200">`;
+                    html += `<tbody>`;
                     summaryData.forEach(row => {
                         html += `<tr>`;
-                        html += `<td class="py-1.5 px-3 border-slate-200 font-mono text-slate-500">${row.id}</td>`;
-                        html += `<td class="py-1.5 px-3 border-r border-slate-200 text-slate-800 font-medium">${row.name}</td>`;
+                        html += `<td class="py-1 px-3 border-r border-slate-200 font-mono text-slate-500">${row.id}</td>`;
+                        html += `<td class="py-1 px-3 border-r border-slate-200 text-slate-800 font-medium">${row.name}</td>`;
                         
                         subCodes.forEach(code => {
                             const g = row.grades[code] || '-';
                             let tClass = "text-slate-600";
                             if(['0','ร','มส','มผ','ผ'].includes(g)) tClass = "text-rose-600 font-bold bg-rose-50 px-1 rounded-sm";
                             else if(['4','3.5'].includes(g)) tClass = "text-emerald-600 font-bold";
-                            html += `<td class="py-1.5 px-2 border-r border-slate-200 text-center ${tClass}">${g}</td>`;
+                            html += `<td class="py-1 px-2 border-r border-slate-200 text-center ${tClass}">${g}</td>`;
                         });
                         
-                        html += `<td class="py-1.5 px-3 text-center font-bold text-brand-700 bg-brand-50 border-r border-slate-200">${row.gpa}</td>`;
-                        html += `<td class="py-1.5 px-3 text-center"><button onclick="SystemEngine.Dashboard.edit('${row.id}')" class="text-amber-500 hover:text-amber-700 bg-amber-50 px-2 py-1 rounded shadow-sm text-[10px] transition-colors"><i class="fas fa-edit"></i> แก้ไข</button></td>`;
+                        html += `<td class="py-1 px-4 text-center font-bold text-brand-700 bg-brand-50 border-r border-slate-200">${row.gpa}</td>`;
+                        html += `<td class="py-1 px-3 text-center"><button onclick="SystemEngine.Dashboard.edit('${row.id}')" class="text-amber-500 hover:text-amber-700 bg-amber-50 px-2 py-0.5 rounded shadow-sm transition-colors"><i class="fas fa-edit"></i> แก้ไข</button></td>`;
                         html += `</tr>`;
                     });
                     html += `</tbody></table></div>`;
@@ -1409,20 +1420,21 @@
                     setText('lbl-summary-term', termLabel);
                     SystemEngine.UI.openModal('modal-summary');
 
-                    // ซิงค์ Scrollbar ด้านบนและตารางให้เลื่อนไปพร้อมกัน
+                    // ซิงค์ Scrollbar ด้านบนและล่างให้เลื่อนไปพร้อมกัน
                     setTimeout(() => {
-                        const tableContainer = document.getElementById('summary-table-container');
+                        const tableContainer = document.getElementById('inner-summary-container');
                         const topScroll = document.getElementById('summary-top-scroll');
                         const topScrollContent = document.getElementById('summary-top-scroll-content');
                         
                         if(tableContainer && topScroll && topScrollContent) {
-                            topScroll.classList.remove('hidden');
-                            topScrollContent.style.width = tableContainer.scrollWidth + 'px';
+                            topScroll.style.display = 'block';
+                            // ดึงความกว้างของตารางจริงๆ มากางตัว scroll ด้านบน
+                            topScrollContent.style.width = tableContainer.querySelector('table').offsetWidth + 'px';
                             
                             topScroll.onscroll = function() { tableContainer.scrollLeft = topScroll.scrollLeft; };
                             tableContainer.onscroll = function() { topScroll.scrollLeft = tableContainer.scrollLeft; };
                         }
-                    }, 200);
+                    }, 300);
                 },
                 calcKPIs: () => {
                     const arr = Object.values(Store.db.grouped);

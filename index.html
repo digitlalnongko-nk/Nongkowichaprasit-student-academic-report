@@ -7,7 +7,7 @@
     
     <!-- ==============================================================================
          [META TAGS สำหรับ Social Media & การแชร์ (LINE, Facebook)]
-         🚨 แก้ไข: ใส่ Absolute URL เพื่อให้ระบบ Social Media หาภาพปกเจอแน่นอน
+         🚨 ระบบตั้งค่าให้ดึงไฟล์ cover.png จาก Vercel ตามขนาดมาตรฐาน 1200x630
     =============================================================================== -->
     <title>ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม</title>
     <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ สำหรับนักเรียนและผู้ปกครอง">
@@ -16,7 +16,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://student-academic-nongkowichaprasitr.vercel.app/">
     <meta property="og:title" content="ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม">
-    <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์">
+    <meta property="og:description" content="ตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ ระบบวิเคราะห์อัจฉริยะ">
     <meta property="og:image" content="https://student-academic-nongkowichaprasitr.vercel.app/cover.png">
     <meta property="og:image:secure_url" content="https://student-academic-nongkowichaprasitr.vercel.app/cover.png">
     <meta property="og:image:width" content="1200">
@@ -1137,7 +1137,7 @@
                                 if(['0','ร','มส','มผ','ผ'].includes(String(sub.grade).trim())) hasIssue = true;
                             });
 
-                            // ป้ายกำกับผลการเรียนสีพาสเทล
+                            // ตั้งค่าการแสดงผลสถานะพาสเทลแบบใหม่
                             let statusBadge = '';
                             if (hasIssue) {
                                 statusBadge = `<div class="flex flex-col items-start mt-1.5">

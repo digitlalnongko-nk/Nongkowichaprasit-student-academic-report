@@ -7,6 +7,7 @@
     
     <!-- ==============================================================================
          [META TAGS สำหรับ Social Media & การแชร์ (LINE, Facebook)]
+         🚨 ระบบตั้งค่าให้ดึงไฟล์ cover.png จาก Vercel ตามขนาดมาตรฐาน 1200x630
     =============================================================================== -->
     <title>ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม</title>
     <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ สำหรับนักเรียนและผู้ปกครอง">
@@ -96,7 +97,7 @@
             --bg-mode: #f8fafc;
         }
 
-        /* ✨ พื้นหลังไล่สี กรม-ม่วง-ชมพู พาสเทล ครอบคลุมทั้งหน้าเว็บ */
+        /* ✨ อัปเดตพื้นหลังไล่สี กรม-ม่วง-ชมพู พาสเทล ครอบคลุมทั้งหน้าเว็บ */
         html, body {
             background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #fce7f3 100%);
             background-size: 200% 200%;
@@ -328,7 +329,7 @@
             <div class="flex items-center gap-2">
                 <div id="auth-guest-controls" class="animate-fade-in no-print">
                     <button onclick="SystemEngine.UI.openModal('modal-login')" class="btn-minimal px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium text-sm hover:bg-slate-50 shadow-sm font-kanit flex items-center gap-2">
-                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากรและผู้ดูแลระบบ</span>
+                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากร</span>
                     </button>
                 </div>
 
@@ -357,13 +358,13 @@
         <div id="view-home" class="app-view hidden animate-slide-up">
             <div class="text-center max-w-4xl mx-auto mb-12 mt-6 font-kanit">
                 <div class="inline-block px-5 py-1.5 rounded-full bg-white/80 backdrop-blur border border-slate-200 text-slate-600 text-xs font-medium mb-5 shadow-sm tracking-wide">
-                    <i class="fas fa-calendar-alt mr-1 theme-text"></i> ปีการศึกษา 2/2568
+                    <i class="fas fa-calendar-alt mr-1 theme-text"></i> ปีการศึกษา 2568
                 </div>
                 <h2 class="text-4xl md:text-5xl font-medium text-slate-800 mb-4 tracking-tight drop-shadow-sm">
                     ตรวจสอบ<span class="theme-text">ผลสัมฤทธิ์</span>ออนไลน์
                 </h2>
                 <p class="text-base md:text-lg text-slate-500 font-sarabun max-w-2xl mx-auto">
-                    ตรวจสอบผลสัมฤทธิ์ทางการเรียนผ่านระบบออนไลน์ กรุณาเลือกระดับชั้นเรียนและชื่อของคุณเพื่อเริ่มต้น
+                    ค้นหาและประเมินผลการเรียนผ่านระบบออนไลน์ เลือกระดับชั้นเรียนของคุณเพื่อเริ่มต้น
                 </p>
             </div>
 
@@ -1920,9 +1921,9 @@
                     let count = 0;
                     const isReadOnly = (Store.auth.role === 'director');
 
+                    // 🌟 เอาการซ่อนคอลัมน์ออก เพื่อให้ผู้อำนวยการเห็นปุ่ม "ดูผลการเรียน" ตลอดเวลา
                     const actionCols = document.querySelectorAll('.action-col');
-                    if(isReadOnly) { actionCols.forEach(el => el.classList.add('hidden')); }
-                    else { actionCols.forEach(el => el.classList.remove('hidden')); }
+                    actionCols.forEach(el => el.classList.remove('hidden'));
 
                     authArr.forEach(s => {
                         let filteredSubs = Store.temp.dashboardTerm !== 'ALL' 
@@ -1932,6 +1933,7 @@
                         if (filteredSubs.length > 0) {
                             const p = s.personal;
                             
+                            // Filter Logic
                             if (filterType === 'failed') {
                                 const hasFailed = filteredSubs.some(sub => ['0', 'ร', 'มส', 'มผ', 'ผ'].includes(String(sub.grade).trim()));
                                 if (!hasFailed) return;
@@ -1943,6 +1945,7 @@
                                 if(tbody) {
                                     let actionButtons = `<button onclick="SystemEngine.Router.navigate('transcript', '${p.id}')" class="text-blue-500 hover:text-blue-700 transition-colors bg-blue-50 w-8 h-8 rounded-lg hover:bg-blue-100 shadow-sm" title="ดูผลการเรียน"><i class="fas fa-eye text-xs"></i></button>`;
                                     
+                                    // โชว์ปุ่มแก้/ลบ ให้เฉพาะคนที่ไม่ใช่ Director
                                     if(!isReadOnly) {
                                         actionButtons += `
                                             <button onclick="SystemEngine.Dashboard.edit('${p.id}')" class="text-amber-500 hover:text-amber-700 transition-colors bg-amber-50 w-8 h-8 rounded-lg hover:bg-amber-100 shadow-sm" title="แก้ไขข้อมูลเบื้องต้น"><i class="fas fa-edit text-xs"></i></button>
@@ -1956,7 +1959,7 @@
                                             <td class="py-3 px-5 font-medium text-slate-800 border-b border-slate-100">${p.name}</td>
                                             <td class="py-3 px-5 text-center border-b border-slate-100"><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-xs border border-slate-200">${formalName.replace('มัธยมศึกษาปีที่ ', 'ม.')}</span></td>
                                             <td class="py-3 px-5 text-center border-b border-slate-100"><span class="text-xs font-medium text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md border border-brand-100">${filteredSubs.length}</span></td>
-                                            <td class="py-3 px-5 text-center border-b border-slate-100 ${isReadOnly ? 'hidden' : ''}">
+                                            <td class="py-3 px-5 text-center border-b border-slate-100">
                                                 <div class="flex items-center justify-center gap-2">
                                                     ${actionButtons}
                                                 </div>

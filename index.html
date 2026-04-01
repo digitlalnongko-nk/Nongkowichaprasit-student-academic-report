@@ -364,7 +364,7 @@
             <div class="flex items-center gap-2">
                 <div id="auth-guest-controls" class="animate-fade-in no-print">
                     <button onclick="SystemEngine.UI.openModal('modal-login')" class="btn-minimal px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium text-sm hover:bg-slate-50 shadow-sm font-kanit flex items-center gap-2">
-                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากรและผู้ดูแลระบบ</span>
+                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากรและผู้ดูแบระบบ</span>
                     </button>
                 </div>
 
@@ -1001,7 +1001,7 @@
             db: { raw: [], grouped: {} },
             settings: { name: 'โรงเรียนหนองโกวิชาประสิทธิ์พิทยาคม', color: '#8b5cf6' },
             // เพิ่มการจำประวัติว่ามาจากหน้าไหน (Smart History)
-            temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all', dashboardClass: 'ALL', currentView: { id: 'home', param: null } },
+            temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all', dashboardClass: 'ALL', currentView: { id: 'home', param: null }, visitCount: 0 },
             charts: { dBar: null, dLine: null } 
         };
 
@@ -1029,11 +1029,6 @@
             init: () => {
                 SystemEngine.Utils.syncColorPicker();
                 SystemEngine.DB.executeBootloader();
-
-                // ✨ NEW: ดึงยอดเข้าชมทันทีตอนเปิดหน้าเว็บ
-                try { 
-                    fetch('https://api.counterapi.dev/v1/nongko_school/visits/up').catch(()=>{}); 
-                } catch(e){}
             },
             
             Utils: {
@@ -1223,6 +1218,7 @@
                         
                         if (res && res.status === 'success') {
                             if(res.data.settings) Store.settings = { ...Store.settings, ...res.data.settings };
+                            if(res.data.visitCount) Store.temp.visitCount = res.data.visitCount; // ✨ รับค่ายอดวิวจาก GS
                             SystemEngine.UI.applyTheme();
                             if(res.data.data) SystemEngine.DB.process(res.data.data);
                             
@@ -1250,6 +1246,7 @@
                     Swal.fire({ title: 'กำลังซิงค์ข้อมูล...', allowOutsideClick: false, didOpen:()=>Swal.showLoading() });
                     CloudAPI.get('init').then(res => {
                         if(res && res.status === 'success') {
+                            if(res.data.visitCount) Store.temp.visitCount = res.data.visitCount; // ✨ รับค่ายอดวิวจาก GS
                             SystemEngine.DB.process(res.data.data);
                             SystemEngine.Dashboard.changeTermFilter();
                             Swal.close();
@@ -1370,14 +1367,13 @@
                         
                         setText('sec-browser', `${browser} (${os})`);
 
-                        // 3. ดึงยอดวิว (View Counter) จาก Public API
-                        fetch('https://api.counterapi.dev/v1/nongko_school/visits')
-                            .then(res => res.json())
-                            .then(data => { 
-                                const count = data.count || 0;
-                                document.getElementById('sec-views').innerHTML = `${count.toLocaleString()} <span class="text-sm font-medium text-slate-500">ครั้ง</span>`; 
-                            })
-                            .catch(() => { setText('sec-views', 'ไม่สามารถดึงข้อมูลได้'); });
+                        // 3. ดึงยอดวิว (View Counter) จากฐานข้อมูล GS ของเราเอง
+                        const views = Store.temp.visitCount || 0;
+                        if (views > 0) {
+                            document.getElementById('sec-views').innerHTML = `${views.toLocaleString()} <span class="text-sm font-medium text-slate-500">ครั้ง</span>`; 
+                        } else {
+                            document.getElementById('sec-views').innerHTML = `<span class="text-rose-500 font-medium">ไม่สามารถดึงข้อมูลได้</span>`; 
+                        }
                     } catch (e) {}
                 }
             },

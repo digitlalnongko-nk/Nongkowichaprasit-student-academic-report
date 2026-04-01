@@ -364,7 +364,7 @@
             <div class="flex items-center gap-2">
                 <div id="auth-guest-controls" class="animate-fade-in no-print">
                     <button onclick="SystemEngine.UI.openModal('modal-login')" class="btn-minimal px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium text-sm hover:bg-slate-50 shadow-sm font-kanit flex items-center gap-2">
-                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากร</span>
+                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากรและผู้ดูแลระบบ</span>
                     </button>
                 </div>
 
@@ -641,13 +641,9 @@
                         <span class="text-slate-800 font-medium text-sm truncate" id="sec-browser">กำลังโหลด...</span>
                     </div>
                     <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 flex flex-col justify-center">
-                        <span class="text-[11px] text-slate-500 mb-1 font-bold">ระบบ Vercel Web Analytics</span>
-                        <span class="text-emerald-600 font-bold text-sm flex items-center gap-2">
-                            <span class="relative flex h-2.5 w-2.5">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                            </span>
-                            เชื่อมต่อ & บันทึกสถิติแล้ว
+                        <span class="text-[11px] text-slate-500 mb-1 font-bold">จำนวนการเข้าชมเว็บไซต์สะสม</span>
+                        <span class="text-emerald-600 font-bold text-base flex items-center gap-2" id="sec-views">
+                            <i class="fas fa-spinner fa-spin text-xs"></i> กำลังโหลด...
                         </span>
                     </div>
                 </div>
@@ -1033,6 +1029,11 @@
             init: () => {
                 SystemEngine.Utils.syncColorPicker();
                 SystemEngine.DB.executeBootloader();
+
+                // ✨ NEW: ดึงยอดเข้าชมทันทีตอนเปิดหน้าเว็บ
+                try { 
+                    fetch('https://api.counterapi.dev/v1/nongko_school/visits/up').catch(()=>{}); 
+                } catch(e){}
             },
             
             Utils: {
@@ -1343,14 +1344,16 @@
                     
                     SystemEngine.Utils.toast('Success', `เปลี่ยนรหัสผ่าน ${user} สำเร็จ`, 'success');
                 },
-                // ✨ NEW
+                // ✨ NEW: ดึงข้อมูลเพื่อความปลอดภัยและสถิติคนเข้าชม (เฉพาะ Admin)
                 loadSecurityInfo: () => {
                     try {
+                        // 1. ดึง IP Address
                         fetch('https://api.ipify.org?format=json')
                             .then(res => res.json())
                             .then(data => { setText('sec-ip', data.ip); })
                             .catch(() => { setText('sec-ip', 'ไม่สามารถระบุได้'); });
                         
+                        // 2. ดึง Browser/OS
                         const ua = navigator.userAgent;
                         let browser = "Unknown";
                         if(ua.includes("Chrome")) browser = "Google Chrome";
@@ -1366,6 +1369,15 @@
                         if(/Mac OS/i.test(ua)) os = "Mac OS";
                         
                         setText('sec-browser', `${browser} (${os})`);
+
+                        // 3. ดึงยอดวิว (View Counter) จาก Public API
+                        fetch('https://api.counterapi.dev/v1/nongko_school/visits')
+                            .then(res => res.json())
+                            .then(data => { 
+                                const count = data.count || 0;
+                                document.getElementById('sec-views').innerHTML = `${count.toLocaleString()} <span class="text-sm font-medium text-slate-500">ครั้ง</span>`; 
+                            })
+                            .catch(() => { setText('sec-views', 'ไม่สามารถดึงข้อมูลได้'); });
                     } catch (e) {}
                 }
             },

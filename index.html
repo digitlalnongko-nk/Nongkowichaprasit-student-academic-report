@@ -7,7 +7,6 @@
     
     <!-- ==============================================================================
          [META TAGS สำหรับ Social Media & การแชร์ (LINE, Facebook)]
-         🚨 ระบบตั้งค่าให้ดึงไฟล์ cover.png จาก Vercel ตามขนาดมาตรฐาน 1200x630
     =============================================================================== -->
     <title>ระบบรายงานผลการเรียน รร.หนองโกวิชาประสิทธิ์พิทยาคม</title>
     <meta name="description" content="ระบบตรวจสอบผลสัมฤทธิ์ทางการเรียนออนไลน์ สำหรับนักเรียนและผู้ปกครอง">
@@ -97,7 +96,7 @@
             --bg-mode: #f8fafc;
         }
 
-        /* ✨ อัปเดตพื้นหลังไล่สี กรม-ม่วง-ชมพู พาสเทล ครอบคลุมทั้งหน้าเว็บ */
+        /* ✨ พื้นหลังไล่สี กรม-ม่วง-ชมพู พาสเทล ครอบคลุมทั้งหน้าเว็บ */
         html, body {
             background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #fce7f3 100%);
             background-size: 200% 200%;
@@ -111,12 +110,12 @@
         }
 
         /* ปรับปรุง Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar { width: 8px; height: 10px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
         ::-webkit-scrollbar-thumb:hover { background-color: var(--theme-primary); }
 
-        .custom-scrollbar::-webkit-scrollbar { height: 10px; width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { height: 12px; width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
 
@@ -124,7 +123,7 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
 
@@ -155,6 +154,12 @@
         .btn-minimal { transition: all 0.2s ease; }
         .btn-minimal:active { transform: scale(0.97); }
 
+        /* แก้ไขเพิ่ม Animation Spin ให้ตัวหมุนโหลดใช้งานได้จริง */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         #splash-screen {
             position: fixed; inset: 0; z-index: 99999;
             background: #ffffff;
@@ -179,7 +184,7 @@
             text-align: center;
             border-right: 1px solid #e2e8f0;
             border-bottom: 1px solid #e2e8f0;
-            padding: 6px; /* ลด padding เพื่อให้กะทัดรัดขึ้น */
+            padding: 6px; 
             white-space: nowrap;
         }
         /* ล็อคแถวบนสุด (Header) ให้เลื่อนลงแล้วยังเห็น */
@@ -195,16 +200,15 @@
         }
         /* ล็อคคอลัมน์รหัสและชื่อ (ซ้ายสุด) ให้เลื่อนขวาแล้วยังเห็น */
         .table-crosstab th:nth-child(1), .table-crosstab td:nth-child(1) {
-            position: sticky; left: 0; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 70px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1);
+            position: sticky; left: 0; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 60px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1);
         }
         .table-crosstab th:nth-child(2), .table-crosstab td:nth-child(2) {
-            position: sticky; left: 70px; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 140px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1);
+            position: sticky; left: 60px; background-color: #f1f5f9; text-align: left; z-index: 10; min-width: 120px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1);
         }
         /* มุมซ้ายบนสุด ต้องมี Z-index สูงสุดกันการทับซ้อนเวลาเลื่อนบนและซ้ายพร้อมกัน */
         .table-crosstab thead th:nth-child(1), .table-crosstab thead th:nth-child(2) {
             z-index: 30;
         }
-        /* การ hover แถว ให้สีเปลี่ยนทั้งแถวรวมถึงคอลัมน์ที่ล็อคไว้ */
         .table-crosstab tbody tr:hover td {
             background-color: #f8fafc;
         }
@@ -214,7 +218,6 @@
 
         /* ====================================================================
          PRINT ENGINE (OFFICIAL A4 STRICT MODE)
-         ปรับปรุงให้แสดงตารางสมบูรณ์ ไม่ตกขอบ ขาวดำ
          ==================================================================== */
         @media print {
             @page { size: A4 portrait; margin: 15mm; } 
@@ -257,7 +260,6 @@
                 color: #000 !important; font-size: 14pt !important;
             }
             
-            /* ลบแถบสีตอนพริ้นให้ดูเป็นทางการ */
             .print-exact { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .grade-a, .grade-b, .grade-c, .grade-f, .grade-s { color: #000 !important; }
         }
@@ -265,7 +267,6 @@
         .print-only { display: none; }
         @media print { .print-only { display: block; } }
 
-        /* PDF Export Strict Classes */
         .pdf-export-mode { padding: 0 !important; background: #fff !important; font-family: 'Sarabun', sans-serif !important; width: 100% !important;}
         .pdf-export-mode .no-print { display: none !important; }
         .pdf-export-mode .print-only { display: block !important; }
@@ -326,7 +327,7 @@
             <div class="flex items-center gap-2">
                 <div id="auth-guest-controls" class="animate-fade-in no-print">
                     <button onclick="SystemEngine.UI.openModal('modal-login')" class="btn-minimal px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium text-sm hover:bg-slate-50 shadow-sm font-kanit flex items-center gap-2">
-                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับครูและผู้ดูแลระบบ</span>
+                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากร</span>
                     </button>
                 </div>
 
@@ -336,7 +337,7 @@
                         <span class="text-[10px] font-mono theme-text uppercase" id="nav-user-role">Role</span>
                     </div>
                     <button onclick="SystemEngine.Router.navigate('dashboard')" class="btn-minimal px-4 py-2 rounded-lg theme-bg text-white font-medium text-sm flex items-center gap-2 shadow-sm font-kanit">
-                        <i class="fas fa-chart-pie text-white"></i> <span class="hidden md:inline">แดชบอร์ดจัดการข้อมูล</span>
+                        <i class="fas fa-chart-pie text-white"></i> <span class="hidden md:inline">แดชบอร์ด</span>
                     </button>
                     <button onclick="SystemEngine.Auth.logout()" class="w-9 h-9 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-rose-500 flex items-center justify-center shadow-sm btn-minimal" title="ออกจากระบบ">
                         <i class="fas fa-sign-out-alt"></i>
@@ -361,7 +362,7 @@
                     ตรวจสอบ<span class="theme-text">ผลสัมฤทธิ์</span>ออนไลน์
                 </h2>
                 <p class="text-base md:text-lg text-slate-500 font-sarabun max-w-2xl mx-auto">
-                    ค้นหาและประเมินผลการเรียนผ่านระบบออนไลน์ เลือกระดับชั้นเรียนของคุณเพื่อเริ่มต้น
+                    ค้นหารายชื่อและตรวจสอบผลการเรียนผ่านระบบออนไลน์ กรุณาเลือกระดับชั้นเรียนของคุณเพื่อเริ่มต้น
                 </p>
             </div>
 
@@ -398,18 +399,18 @@
             <div class="max-w-[1100px] mx-auto" id="transcript-export-container">
                 
                 <div class="flex flex-wrap justify-between items-center mb-4 no-print gap-3">
-                    <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
+                    <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
                         <i class="fas fa-chevron-left text-xs"></i> กลับสู่หน้าหลัก
                     </button>
                     <div class="flex gap-2">
-                        <button onclick="SystemEngine.Export.toExcel()" class="bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
-                            <i class="fas fa-file-excel"></i> ส่งออกข้อมูล (Excel)
+                        <button onclick="SystemEngine.Export.toExcel()" class="bg-white/90 backdrop-blur text-emerald-600 border border-emerald-200 hover:bg-emerald-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
+                            <i class="fas fa-file-excel"></i> ส่งออก (Excel)
                         </button>
-                        <button onclick="SystemEngine.Export.toPDF('transcript-export-container', 'Transcript')" class="bg-white text-rose-500 border border-rose-200 hover:bg-rose-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
+                        <button onclick="SystemEngine.Export.toPDF('transcript-export-container', 'Transcript')" class="bg-white/90 backdrop-blur text-rose-500 border border-rose-200 hover:bg-rose-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
                             <i class="fas fa-file-pdf"></i> บันทึก PDF
                         </button>
                         <button onclick="window.print()" class="theme-bg text-white px-5 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun btn-minimal">
-                            <i class="fas fa-print"></i> สั่งพิมพ์รายงาน
+                            <i class="fas fa-print"></i> พิมพ์
                         </button>
                     </div>
                 </div>
@@ -510,7 +511,7 @@
         </div>
 
         <!-- ---------------------------------------------------
-             VIEW 3: DASHBOARD (ADMIN)
+             VIEW 3: DASHBOARD (ADMIN / TEACHER / EDITOR / DIRECTOR)
         ---------------------------------------------------- -->
         <div id="view-dashboard" class="app-view hidden animate-fade-in space-y-6">
             
@@ -527,7 +528,7 @@
                         <i class="fas fa-table"></i> รายงานตารางเกรดรวม
                     </button>
                     
-                    <!-- Dropdown เลือกชั้นเรียน สำหรับ Admin เท่านั้น -->
+                    <!-- Dropdown เลือกชั้นเรียน สำหรับ Admin, Editor, Director -->
                     <div class="relative group flex-grow sm:flex-grow-0 hidden" id="admin-class-filter-container">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-layer-group text-slate-400 group-focus-within:theme-text transition-colors"></i>
@@ -587,30 +588,48 @@
                 </div>
             </div>
 
+            <!-- Charts Section (Bar & Line) -->
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                <!-- กราฟแท่งกระจายเกรด -->
+                <div class="minimal-card p-5 flex flex-col bg-white">
+                    <h4 class="font-medium text-slate-700 text-sm font-kanit mb-4 flex items-center gap-2">
+                        <i class="fas fa-chart-bar text-slate-400"></i> ทิศทางการกระจายตัวของเกรด (ช่วงเทอม/ชั้นที่เลือก)
+                    </h4>
+                    <div class="flex-grow relative h-[250px] w-full"><canvas id="chart-dash-gpa"></canvas></div>
+                </div>
+                
+                <!-- กราฟเส้นแนวโน้มโรงเรียน -->
+                <div class="minimal-card p-5 flex flex-col bg-white">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-medium text-slate-700 text-sm font-kanit flex items-center gap-2">
+                            <i class="fas fa-chart-line text-brand-400"></i> แนวโน้มผลการเรียน (Trend Analytics)
+                        </h4>
+                        <select id="line-chart-type" onchange="SystemEngine.Dashboard.renderLineChart()" class="text-xs border border-slate-200 rounded p-1 outline-none font-sarabun bg-slate-50">
+                            <option value="term">แนวโน้ม GPA แยกตามเทอม</option>
+                            <option value="subject">ค่าเฉลี่ย GPA แยกตามรายวิชา</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow relative h-[250px] w-full"><canvas id="chart-dash-trend"></canvas></div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
-                <!-- Uploader & Chart -->
-                <div class="xl:col-span-4 space-y-6">
-                    <div class="minimal-card p-6 theme-bg text-white border-transparent shadow-md">
+                <!-- Uploader -->
+                <div class="xl:col-span-3" id="card-upload-excel">
+                    <div class="minimal-card p-6 theme-bg text-white border-transparent shadow-md h-full flex flex-col justify-center">
                         <h3 class="text-lg font-medium font-kanit mb-2 flex items-center gap-2"><i class="fas fa-file-excel text-emerald-300"></i> นำเข้าข้อมูล ปพ.5</h3>
                         <p class="text-xs text-brand-100 font-sarabun mb-4 leading-relaxed">
                             ระบบ <b class="text-white">เขียนทับ (Overwrite)</b> อัตโนมัติเฉพาะเทอมและปีการศึกษาที่ตรงกัน ข้อมูลเก่าไม่สูญหาย
                         </p>
                         <input type="file" id="inp-file-excel" accept=".xlsx, .xls" class="hidden" onchange="SystemEngine.Excel.handleUpload(event)">
-                        <button onclick="document.getElementById('inp-file-excel').click()" class="btn-fluid w-full bg-white text-slate-800 py-2.5 rounded-lg font-medium text-sm hover:bg-slate-100 transition-colors font-sarabun shadow-sm flex justify-center items-center gap-2">
+                        <button onclick="document.getElementById('inp-file-excel').click()" class="btn-fluid w-full bg-white text-slate-800 py-3 rounded-lg font-medium text-sm hover:bg-slate-100 transition-colors font-sarabun shadow-sm flex justify-center items-center gap-2 mt-auto">
                             <i class="fas fa-upload theme-text"></i> อัปโหลดไฟล์ Excel
                         </button>
-                    </div>
-
-                    <div class="minimal-card p-5 flex flex-col bg-white">
-                        <h4 class="font-medium text-slate-700 text-sm font-kanit mb-4 flex items-center gap-2">
-                            <i class="fas fa-chart-bar text-slate-400"></i> ทิศทางการกระจายตัวของเกรด
-                        </h4>
-                        <div class="flex-grow relative h-[200px]"><canvas id="chart-dash-gpa"></canvas></div>
                     </div>
                 </div>
 
                 <!-- Table -->
-                <div class="minimal-card p-0 xl:col-span-8 flex flex-col bg-white relative overflow-hidden">
+                <div class="minimal-card p-0 xl:col-span-9 flex flex-col bg-white relative overflow-hidden" id="card-db-table">
                     <div class="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-50 rounded-t-[1rem] z-10">
                         <div>
                             <h3 class="font-medium text-slate-800 text-sm font-kanit">ฐานข้อมูลนักเรียนในระบบ</h3>
@@ -622,7 +641,7 @@
                         </div>
                     </div>
                     
-                    <div class="relative w-full h-[450px]">
+                    <div class="relative w-full h-[400px]">
                         <div class="overflow-x-auto h-full custom-scrollbar w-full" id="table-wrapper">
                             <table id="main-db-table" class="w-full min-w-[700px] text-left font-sarabun text-sm whitespace-nowrap">
                                 <thead class="bg-white sticky top-0 border-b border-slate-200 text-slate-500 z-10 shadow-sm">
@@ -631,13 +650,13 @@
                                         <th class="py-3 px-5 font-medium text-xs">ชื่อ-นามสกุล</th>
                                         <th class="py-3 px-5 font-medium text-xs text-center">ระดับชั้น</th>
                                         <th class="py-3 px-5 font-medium text-xs text-center">จำนวนวิชา</th>
-                                        <th class="py-3 px-5 font-medium text-xs text-center w-36">ดู/จัดการ</th>
+                                        <th class="py-3 px-5 font-medium text-xs text-center w-36 action-col">ดู/จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody-db-mgr" class="divide-y divide-slate-100 bg-white"></tbody>
                             </table>
                         </div>
-                        <!-- Empty State - จัดตำแหน่งให้สมบูรณ์แบบไม่ขี่กับตาราง -->
+                        <!-- Empty State -->
                         <div id="state-table-empty" class="hidden flex-col items-center justify-center text-slate-400 bg-white h-full w-full absolute inset-0 z-20">
                             <div class="w-20 h-20 bg-slate-50 rounded-full shadow-sm flex items-center justify-center mb-4 border border-slate-100">
                                 <i class="fas fa-inbox text-4xl text-slate-300"></i>
@@ -671,6 +690,36 @@
                 <button onclick="SystemEngine.Auth.login()" class="w-full theme-bg text-white font-medium py-2 rounded-lg mt-5 text-sm font-kanit btn-minimal shadow-md">
                     ยืนยัน
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin: Manage Users (เปลี่ยนรหัสผ่าน) -->
+    <div id="modal-manage-users" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="SystemEngine.UI.closeModal('modal-manage-users')"></div>
+        <div class="relative w-full max-w-lg z-10 flex flex-col max-h-[90vh]">
+            <div class="minimal-card flex flex-col h-full w-full overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-white rounded-t-xl z-10 shrink-0">
+                    <h3 class="font-medium text-slate-800 font-kanit text-sm flex items-center gap-2"><i class="fas fa-users-cog text-indigo-500"></i> จัดการบัญชีบุคลากร</h3>
+                    <button onclick="SystemEngine.UI.closeModal('modal-manage-users')" class="text-slate-400 hover:text-rose-500"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="p-0 overflow-y-auto font-sarabun text-sm bg-slate-50 flex-grow custom-scrollbar">
+                    <table class="w-full text-left bg-white">
+                        <thead class="bg-slate-100 border-b border-slate-200 text-slate-600 sticky top-0">
+                            <tr>
+                                <th class="py-2 px-4 text-xs">Username / Role</th>
+                                <th class="py-2 px-4 text-xs w-1/2">รหัสผ่าน (คลิกเพื่อแก้ไข)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-manage-users" class="divide-y divide-slate-100">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-100 flex justify-between items-center bg-white rounded-b-xl z-10 shrink-0">
+                    <span class="text-[10px] text-slate-400 font-mono">* บันทึกรหัสผ่านไว้ในเบราว์เซอร์นี้เท่านั้น</span>
+                    <button onclick="SystemEngine.UI.closeModal('modal-manage-users')" class="bg-slate-100 text-slate-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-slate-200">ปิดหน้าต่าง</button>
+                </div>
             </div>
         </div>
     </div>
@@ -786,7 +835,7 @@
                 </div>
 
                 <!-- Container สำหรับแสดงผลตาราง ต้องใช้โครงสร้างนี้เพื่อล็อคแกนให้สมบูรณ์ -->
-                <div class="flex-grow p-4 md:p-6 bg-slate-50 w-full flex flex-col overflow-hidden">
+                <div class="flex-grow p-4 md:p-6 bg-slate-50 w-full flex flex-col overflow-hidden relative">
                     <div id="summary-table-container" class="w-full">
                         <!-- Data injected here via JS -->
                     </div>
@@ -812,33 +861,28 @@
         // --- GLOBAL ERROR BOUNDARY ---
         window.onerror = function(msg) {
             console.error('[System Error]:', msg);
-            try {
-                SystemEngine.UI.safeHideSplash();
-            } catch(e){}
+            try { SystemEngine.UI.safeHideSplash(); } catch(e){}
             return false; 
         };
 
         const SYS_CONFIG = {
-            VERSION: '10.2.1 Cloud Realtime Pro Max',
+            VERSION: '10.4.0 Ultimate Roles & Analytics',
             // 🚨 ใส่ Web App URL ของคุณที่นี่
             GAS_URL: 'https://script.google.com/macros/s/AKfycbwJ3nyXQPkbm51Wu3iNnfYVsU9HPWIq6_B4iVWlocs9BsGt6OV-Ar36zcsVq7jYkdgf5g/exec',
-            // ✅ ใช้ "ม.1" ถึง "ม.6" เพื่อให้ตรงกับข้อมูลใน Excel ที่วิเคราะห์แล้ว
             CLASS_LIST: ['ม.1', 'ม.2', 'ม.3', 'ม.4', 'ม.5', 'ม.6'],
             VALID_GRADES: ['0','1','1.5','2','2.5','3','3.5','4','ร','มส','ผ','มผ']
         };
 
-        // ตั้งชื่อที่แสดงผลใน UI ให้สวยงามและเป็นทางการ
         const CLASS_DISPLAY_NAMES = {
-            'ม.1': 'มัธยมศึกษาปีที่ 1',
-            'ม.2': 'มัธยมศึกษาปีที่ 2',
-            'ม.3': 'มัธยมศึกษาปีที่ 3',
-            'ม.4': 'มัธยมศึกษาปีที่ 4',
-            'ม.5': 'มัธยมศึกษาปีที่ 5',
-            'ม.6': 'มัธยมศึกษาปีที่ 6'
+            'ม.1': 'มัธยมศึกษาปีที่ 1', 'ม.2': 'มัธยมศึกษาปีที่ 2', 'ม.3': 'มัธยมศึกษาปีที่ 3',
+            'ม.4': 'มัธยมศึกษาปีที่ 4', 'ม.5': 'มัธยมศึกษาปีที่ 5', 'ม.6': 'มัธยมศึกษาปีที่ 6'
         };
 
-        const ROLES_MAP = {
+        // 🌟 เพิ่มสิทธิ์ Editor011 และ Director001 แบบครบถ้วน
+        let ROLES_MAP = {
             'Admin': { pass: '66440763', role: 'admin', label: 'ผู้ดูแลระบบ', access: 'ALL' },
+            'Editor011': { pass: 'Editor011', role: 'editor', label: 'ผู้จัดการข้อมูล', access: 'ALL' },
+            'Director001': { pass: 'Director001', role: 'director', label: 'ผู้อำนวยการสถานศึกษา', access: 'ALL' },
             'Nongko001': { pass: 'Nongko001', role: 'teacher', label: 'ครู ม.1', access: 'ม.1' },
             'Nongko002': { pass: 'Nongko002', role: 'teacher', label: 'ครู ม.2', access: 'ม.2' },
             'Nongko003': { pass: 'Nongko003', role: 'teacher', label: 'ครู ม.3', access: 'ม.3' },
@@ -847,22 +891,27 @@
             'Nongko006': { pass: 'Nongko006', role: 'teacher', label: 'ครู ม.6', access: 'ม.6' }
         };
 
+        // โหลดรหัสผ่านที่ Admin เปลี่ยนไว้ในเครื่องนี้ (ถ้ามี)
+        const loadCustomPasswords = () => {
+            const saved = JSON.parse(localStorage.getItem('sys_passwords') || '{}');
+            for(let user in saved) {
+                if(ROLES_MAP[user]) ROLES_MAP[user].pass = saved[user];
+            }
+        };
+        loadCustomPasswords();
+
         const Store = {
             auth: { user: null, role: null, access: null },
             db: { raw: [], grouped: {} },
             settings: { name: 'โรงเรียนหนองโกวิชาประสิทธิ์พิทยาคม', color: '#8b5cf6' },
             temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all', dashboardClass: 'ALL' },
-            charts: { dBar: null } // กำหนดให้ชัดเจน ป้องกัน undefined error
+            charts: { dBar: null, dLine: null } 
         };
 
-        // Cache-Busting API Wrapper
         const CloudAPI = {
             get: async (action) => {
                 const cacheBuster = new Date().getTime();
-                const res = await fetch(`${SYS_CONFIG.GAS_URL}?action=${action}&t=${cacheBuster}`, {
-                    cache: 'no-store',
-                    redirect: 'follow'
-                });
+                const res = await fetch(`${SYS_CONFIG.GAS_URL}?action=${action}&t=${cacheBuster}`, { cache: 'no-store', redirect: 'follow' });
                 if(!res.ok) throw new Error("API Fetch Error");
                 return await res.json();
             },
@@ -893,12 +942,7 @@
                 toast: (title, desc, type = 'success') => {
                     const deck = document.getElementById('toast-deck');
                     const t = document.createElement('div');
-                    const cMap = {
-                        success: 'border-l-[3px] border-emerald-500',
-                        error: 'border-l-[3px] border-rose-500',
-                        warning: 'border-l-[3px] border-amber-500',
-                        info: 'border-l-[3px] border-blue-500'
-                    };
+                    const cMap = { success: 'border-l-[3px] border-emerald-500', error: 'border-l-[3px] border-rose-500', warning: 'border-l-[3px] border-amber-500', info: 'border-l-[3px] border-blue-500' };
                     const iMap = { success: 'fa-check-circle text-emerald-500', error: 'fa-times-circle text-rose-500', warning: 'fa-exclamation-triangle text-amber-500', info: 'fa-info-circle text-blue-500' };
                     
                     t.className = `bg-white p-4 rounded-xl shadow-float w-80 flex items-start gap-3 font-sarabun transform transition-all duration-300 translate-x-full opacity-0 ${cMap[type]} z-[999] border border-slate-100`;
@@ -965,6 +1009,44 @@
                         setText('cfg-lbl-color', set.color);
 
                     } catch (e) {}
+                },
+                // 🔐 ฟังก์ชันซ่อน/แสดงปุ่มต่างๆ ตามระดับสิทธิ์ (Role)
+                applyRolePermissions: () => {
+                    const role = Store.auth.role;
+                    const uploadCard = document.getElementById('card-upload-excel');
+                    const settingsBtnContainer = document.getElementById('btn-group-admin');
+                    const adminClassFilter = document.getElementById('admin-class-filter-container');
+                    
+                    if(uploadCard) uploadCard.style.display = 'flex';
+                    if(settingsBtnContainer) settingsBtnContainer.innerHTML = '';
+                    if(adminClassFilter) adminClassFilter.classList.add('hidden');
+
+                    if(role === 'admin') {
+                        // Admin เข้าถึงได้ 100% + จัดการรหัสผ่าน
+                        if(settingsBtnContainer) {
+                            settingsBtnContainer.innerHTML = `
+                                <button onclick="SystemEngine.Admin.openUserManage()" class="bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-lg text-xs font-medium text-indigo-700 hover:bg-indigo-100 transition-colors shadow-sm mr-2"><i class="fas fa-users-cog"></i> บัญชี</button>
+                                <button onclick="SystemEngine.UI.openModal('modal-settings')" class="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors shadow-sm"><i class="fas fa-cog"></i> ตั้งค่า</button>
+                            `;
+                        }
+                        if(adminClassFilter) adminClassFilter.classList.remove('hidden');
+                        Store.temp.dashboardClass = 'ALL';
+                    } 
+                    else if (role === 'editor') {
+                        // Editor ทำได้ทุกอย่าง "ยกเว้น" ปุ่มตั้งค่า
+                        if(adminClassFilter) adminClassFilter.classList.remove('hidden');
+                        Store.temp.dashboardClass = 'ALL';
+                    } 
+                    else if (role === 'director') {
+                        // Director ดูได้อย่างเดียว (Read-only) ปิดปุ่มอัปโหลด
+                        if(adminClassFilter) adminClassFilter.classList.remove('hidden');
+                        if(uploadCard) uploadCard.style.display = 'none'; 
+                        Store.temp.dashboardClass = 'ALL';
+                    }
+                    else {
+                        // Teacher เห็นและแก้ไขเฉพาะชั้นของตัวเอง
+                        Store.temp.dashboardClass = Store.auth.access;
+                    }
                 }
             },
             
@@ -1086,6 +1168,51 @@
                 }
             },
             
+            Admin: {
+                openUserManage: () => {
+                    const tbody = document.getElementById('tbody-manage-users');
+                    tbody.innerHTML = '';
+                    
+                    for(let u in ROLES_MAP) {
+                        if(u === 'Admin') continue; // ข้าม Admin เอง
+                        const r = ROLES_MAP[u];
+                        let roleBadge = '';
+                        if(r.role === 'editor') roleBadge = '<span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-[10px]">Editor</span>';
+                        else if(r.role === 'director') roleBadge = '<span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px]">Director</span>';
+                        else roleBadge = '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[10px]">Teacher</span>';
+
+                        tbody.innerHTML += `
+                            <tr>
+                                <td class="py-3 px-4 border-b border-slate-100">
+                                    <div class="font-bold text-slate-800">${u}</div>
+                                    <div class="flex items-center gap-2 mt-1"><span class="text-xs text-slate-500">${r.label}</span> ${roleBadge}</div>
+                                </td>
+                                <td class="py-3 px-4 border-b border-slate-100">
+                                    <div class="flex gap-2">
+                                        <input type="text" id="pw-${u}" value="${r.pass}" class="w-full bg-slate-50 border border-slate-200 px-2 py-1 rounded text-sm text-slate-600 focus:border-indigo-400 outline-none">
+                                        <button onclick="SystemEngine.Admin.savePassword('${u}')" class="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600 text-xs shadow-sm"><i class="fas fa-save"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                    SystemEngine.UI.openModal('modal-manage-users');
+                },
+                savePassword: (user) => {
+                    const newPw = document.getElementById(`pw-${user}`).value.trim();
+                    if(!newPw) return SystemEngine.Utils.toast('Error', 'รหัสผ่านห้ามว่างเปล่า', 'error');
+                    
+                    ROLES_MAP[user].pass = newPw;
+                    
+                    // บันทึกรหัสผ่านใน LocalStorage (Browser) 
+                    const saved = JSON.parse(localStorage.getItem('sys_passwords') || '{}');
+                    saved[user] = newPw;
+                    localStorage.setItem('sys_passwords', JSON.stringify(saved));
+                    
+                    SystemEngine.Utils.toast('Success', `เปลี่ยนรหัสผ่าน ${user} สำเร็จ`, 'success');
+                }
+            },
+
             Home: {
                 render: () => {
                     const grid = document.getElementById('grid-classes');
@@ -1131,13 +1258,11 @@
                             d.dataset.search = `${s.personal.id} ${s.personal.name}`.toLowerCase();
                             d.onclick = () => SystemEngine.Router.navigate('transcript', s.personal.id);
                             
-                            // ตรวจสอบเกรดของเด็กคนนี้ว่ามีติด 0/ร/มส/มผ/ผ ไหม?
                             let hasIssue = false;
                             s.subjects.forEach(sub => {
                                 if(['0','ร','มส','มผ','ผ'].includes(String(sub.grade).trim())) hasIssue = true;
                             });
 
-                            // ตั้งค่าการแสดงผลสถานะพาสเทลแบบใหม่
                             let statusBadge = '';
                             if (hasIssue) {
                                 statusBadge = `<div class="flex flex-col items-start mt-1.5">
@@ -1271,30 +1396,9 @@
 
             Dashboard: {
                 init: () => {
+                    SystemEngine.UI.applyRolePermissions(); // บังคับระดับสิทธิ์เพื่อซ่อน/โชว์ปุ่ม
                     setText('lbl-dash-auth', Store.auth.label);
                     Store.temp.dashboardFilter = 'all'; 
-                    
-                    const actGrp = document.getElementById('btn-group-admin');
-                    if(actGrp) {
-                        actGrp.innerHTML = '';
-                        if(Store.auth.role === 'admin') {
-                            actGrp.innerHTML = `<button onclick="SystemEngine.UI.openModal('modal-settings')" class="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors shadow-sm"><i class="fas fa-cog"></i> ตั้งค่า</button>`;
-                        }
-                    }
-
-                    // แสดงที่เลือกระดับชั้นเฉพาะ Admin เท่านั้น
-                    const classFilterContainer = document.getElementById('admin-class-filter-container');
-                    const classFilter = document.getElementById('dash-class-filter');
-                    if(Store.auth.role === 'admin') {
-                        if(classFilterContainer) classFilterContainer.classList.remove('hidden');
-                        let classHtml = '<option value="ALL">รวมทุกระดับชั้น</option>';
-                        SYS_CONFIG.CLASS_LIST.forEach(c => { classHtml += `<option value="${c}">${CLASS_DISPLAY_NAMES[c] || c}</option>`; });
-                        if(classFilter) classFilter.innerHTML = classHtml;
-                        Store.temp.dashboardClass = 'ALL';
-                    } else {
-                        if(classFilterContainer) classFilterContainer.classList.add('hidden');
-                        Store.temp.dashboardClass = Store.auth.access;
-                    }
                     
                     const termSet = new Set();
                     Object.values(Store.db.grouped).forEach(student => {
@@ -1313,16 +1417,20 @@
                     Store.temp.dashboardTerm = 'ALL';
                     SystemEngine.Dashboard.calcKPIs();
                     SystemEngine.Dashboard.renderTable();
+                    SystemEngine.Dashboard.renderLineChart(); // วาดกราฟเส้นครั้งแรกเมื่อเปิด Dashboard
                 },
                 changeTermFilter: () => {
                     const elTerm = document.getElementById('dash-term-filter');
                     const elClass = document.getElementById('dash-class-filter');
                     if(elTerm) Store.temp.dashboardTerm = elTerm.value;
-                    if(elClass && Store.auth.role === 'admin') Store.temp.dashboardClass = elClass.value;
+                    if(elClass && (Store.auth.role === 'admin' || Store.auth.role === 'editor' || Store.auth.role === 'director')) {
+                        Store.temp.dashboardClass = elClass.value;
+                    }
                     
                     Store.temp.dashboardFilter = 'all'; 
                     SystemEngine.Dashboard.calcKPIs();
                     SystemEngine.Dashboard.renderTable();
+                    SystemEngine.Dashboard.renderLineChart(); // อัปเดตตารางกราฟด้วย
                 },
                 filterTable: (type) => {
                     Store.temp.dashboardFilter = type;
@@ -1346,7 +1454,7 @@
                     
                     const arr = Object.values(Store.db.grouped);
                     let authArr = arr;
-                    if(Store.auth.role !== 'admin') {
+                    if(Store.auth.role === 'teacher') {
                         authArr = arr.filter(s => s.personal.class === Store.auth.access);
                     } else if (dClass !== 'ALL') {
                         authArr = arr.filter(s => s.personal.class === dClass);
@@ -1381,23 +1489,25 @@
                     }
                     
                     const subCodes = Array.from(subjectsMap.keys()).sort();
-                    
-                    // สร้าง HTML ตารางสรุป (CrossTab)
-                    let html = `<div class="overflow-auto w-full max-h-[65vh] border border-slate-300 rounded-lg shadow-sm custom-scrollbar" id="inner-summary-container">
-                                <table class="w-full text-left font-sarabun text-[10px] md:text-[11px] table-crosstab min-w-[1000px]">`;
+                    const isReadOnly = (Store.auth.role === 'director'); // ป้องกัน Director แก้ไข
+
+                    // 🌟 สร้าง HTML ตารางสรุป (CrossTab) กางเต็มจอ ฟอนต์ 10px ล็อกแกน
+                    let html = `<div class="overflow-auto w-full max-h-[70vh] border border-slate-300 rounded-lg shadow-sm custom-scrollbar bg-white" id="inner-summary-container">
+                                <table class="text-left font-sarabun text-[10px] md:text-[11px] table-crosstab" style="min-width: ${500 + (subCodes.length * 60)}px;">`;
                     html += `<thead><tr>`;
-                    html += `<th class="py-2 px-3 border-b border-r border-slate-300 text-slate-800">รหัสประจำตัว</th>`;
-                    html += `<th class="py-2 px-3 border-b border-r border-slate-300 text-slate-800">ชื่อ-นามสกุล</th>`;
+                    html += `<th class="py-2 px-2 border-b border-r border-slate-300 text-slate-800 z-30">รหัสประจำตัว</th>`;
+                    html += `<th class="py-2 px-3 border-b border-r border-slate-300 text-slate-800 z-30">ชื่อ-นามสกุล</th>`;
                     subCodes.forEach(code => {
-                        html += `<th class="py-2 px-2 border-b border-r border-slate-300 text-center font-mono text-[9px] text-slate-800" title="${subjectsMap.get(code)}">${code}</th>`;
+                        html += `<th class="py-2 px-1 border-b border-r border-slate-300 text-center font-mono text-[9px] text-slate-800" title="${subjectsMap.get(code)}">${code}</th>`;
                     });
                     html += `<th class="py-2 px-3 text-center text-brand-700 bg-brand-50 border-b border-r border-slate-300">GPA</th>`;
-                    html += `<th class="py-2 px-3 text-center text-slate-700 border-b border-slate-300">จัดการ</th></tr></thead>`;
+                    if(!isReadOnly) html += `<th class="py-2 px-3 text-center text-slate-700 border-b border-slate-300">จัดการ</th>`;
+                    html += `</tr></thead>`;
                     
                     html += `<tbody>`;
                     summaryData.forEach(row => {
                         html += `<tr>`;
-                        html += `<td class="py-1 px-3 border-r border-slate-200 font-mono text-slate-500">${row.id}</td>`;
+                        html += `<td class="py-1 px-2 border-r border-slate-200 font-mono text-slate-500">${row.id}</td>`;
                         html += `<td class="py-1 px-3 border-r border-slate-200 text-slate-800 font-medium">${row.name}</td>`;
                         
                         subCodes.forEach(code => {
@@ -1405,11 +1515,13 @@
                             let tClass = "text-slate-600";
                             if(['0','ร','มส','มผ','ผ'].includes(g)) tClass = "text-rose-600 font-bold bg-rose-50 px-1 rounded-sm";
                             else if(['4','3.5'].includes(g)) tClass = "text-emerald-600 font-bold";
-                            html += `<td class="py-1 px-2 border-r border-slate-200 text-center ${tClass}">${g}</td>`;
+                            html += `<td class="py-1 px-1 border-r border-slate-200 text-center ${tClass}">${g}</td>`;
                         });
                         
-                        html += `<td class="py-1 px-4 text-center font-bold text-brand-700 bg-brand-50 border-r border-slate-200">${row.gpa}</td>`;
-                        html += `<td class="py-1 px-3 text-center"><button onclick="SystemEngine.Dashboard.edit('${row.id}')" class="text-amber-500 hover:text-amber-700 bg-amber-50 px-2 py-0.5 rounded shadow-sm transition-colors"><i class="fas fa-edit"></i> แก้ไข</button></td>`;
+                        html += `<td class="py-1 px-3 text-center font-bold text-brand-700 bg-brand-50 border-r border-slate-200">${row.gpa}</td>`;
+                        if(!isReadOnly) {
+                            html += `<td class="py-1 px-3 text-center"><button onclick="SystemEngine.Dashboard.edit('${row.id}')" class="text-amber-500 hover:text-amber-700 bg-amber-50 px-2 py-0.5 rounded shadow-sm transition-colors text-[10px]"><i class="fas fa-edit"></i> แก้ไข</button></td>`;
+                        }
                         html += `</tr>`;
                     });
                     html += `</tbody></table></div>`;
@@ -1420,7 +1532,7 @@
                     setText('lbl-summary-term', termLabel);
                     SystemEngine.UI.openModal('modal-summary');
 
-                    // ซิงค์ Scrollbar ด้านบนและล่างให้เลื่อนไปพร้อมกัน
+                    // ซิงค์ Scrollbar ด้านบนและล่างให้เลื่อนไปพร้อมกันแบบเรียลไทม์
                     setTimeout(() => {
                         const tableContainer = document.getElementById('inner-summary-container');
                         const topScroll = document.getElementById('summary-top-scroll');
@@ -1429,10 +1541,26 @@
                         if(tableContainer && topScroll && topScrollContent) {
                             topScroll.style.display = 'block';
                             // ดึงความกว้างของตารางจริงๆ มากางตัว scroll ด้านบน
-                            topScrollContent.style.width = tableContainer.querySelector('table').offsetWidth + 'px';
+                            const actualTableWidth = tableContainer.querySelector('table').offsetWidth;
+                            topScrollContent.style.width = actualTableWidth + 'px';
                             
-                            topScroll.onscroll = function() { tableContainer.scrollLeft = topScroll.scrollLeft; };
-                            tableContainer.onscroll = function() { topScroll.scrollLeft = tableContainer.scrollLeft; };
+                            let isSyncingLeft = false;
+                            let isSyncingRight = false;
+
+                            topScroll.onscroll = function() { 
+                                if (!isSyncingLeft) {
+                                    isSyncingRight = true;
+                                    tableContainer.scrollLeft = topScroll.scrollLeft; 
+                                }
+                                isSyncingLeft = false;
+                            };
+                            tableContainer.onscroll = function() { 
+                                if (!isSyncingRight) {
+                                    isSyncingLeft = true;
+                                    topScroll.scrollLeft = tableContainer.scrollLeft; 
+                                }
+                                isSyncingRight = false;
+                            };
                         }
                     }, 300);
                 },
@@ -1441,7 +1569,7 @@
                     const dClass = Store.temp.dashboardClass;
                     
                     let authArr = arr;
-                    if(Store.auth.role !== 'admin') {
+                    if(Store.auth.role === 'teacher') {
                         authArr = arr.filter(s => s.personal.class === Store.auth.access);
                     } else if (dClass !== 'ALL') {
                         authArr = arr.filter(s => s.personal.class === dClass);
@@ -1513,6 +1641,183 @@
                         } 
                     });
                 },
+
+                // 📈 ---------------- ฟังก์ชันวาดกราฟเส้นแนวโน้ม (Trend Line Chart) ----------------
+                renderLineChart: () => {
+                    const ctxL = document.getElementById('chart-dash-trend');
+                    if(!ctxL) return;
+                    const chartType = document.getElementById('line-chart-type').value;
+
+                    if(Store.charts && Store.charts.dLine) {
+                        try { Store.charts.dLine.destroy(); } catch(e){}
+                    }
+
+                    // หาเทอมทั้งหมดที่มีในฐานข้อมูล เรียงตามลำดับเวลาเก่าไปใหม่
+                    const termSet = new Set();
+                    Object.values(Store.db.grouped).forEach(student => {
+                        student.subjects.forEach(sub => {
+                            if (sub.semester && sub.year) termSet.add(`${sub.semester}/${sub.year}`);
+                        });
+                    });
+                    const sortedTerms = Array.from(termSet).sort((a,b) => {
+                        const [s1,y1]=a.split('/'); const [s2,y2]=b.split('/');
+                        if (y1 !== y2) return parseInt(y1) - parseInt(y2);
+                        return parseInt(s1) - parseInt(s2); 
+                    });
+
+                    let datasets = [];
+                    const allStudents = Object.values(Store.db.grouped);
+
+                    if(chartType === 'term') {
+                        // โหมด: 1 แนวโน้ม GPA แยกตามเทอม (แกน X คือเทอม)
+                        const role = Store.auth.role;
+                        
+                        // 1.1 เส้นค่าเฉลี่ยรวมของทั้งโรงเรียน และทุกชั้น (เฉพาะระดับที่มีสิทธิ์ดูทุกชั้น)
+                        if(role === 'admin' || role === 'editor' || role === 'director') {
+                            // เส้นรวมทั้งโรงเรียน
+                            const overallData = sortedTerms.map(term => {
+                                let tPoints = 0, tCredits = 0;
+                                allStudents.forEach(s => {
+                                    const termSubs = s.subjects.filter(sub => sub.semester === term.split('/')[0] && sub.year === term.split('/')[1]);
+                                    termSubs.forEach(sub => {
+                                        const c = parseFloat(sub.credits) || 0;
+                                        const g = parseFloat(sub.grade);
+                                        if(!isNaN(g) && !['ร','มส','ผ','มผ'].includes(String(sub.grade).trim())) {
+                                            tPoints += c * g; tCredits += c;
+                                        }
+                                    });
+                                });
+                                return tCredits > 0 ? (tPoints/tCredits).toFixed(2) : null;
+                            });
+                            
+                            datasets.push({
+                                label: 'เฉลี่ยรวมทั้งโรงเรียน',
+                                data: overallData,
+                                borderColor: '#1e293b',
+                                backgroundColor: '#1e293b',
+                                borderWidth: 3,
+                                borderDash: [5, 5],
+                                tension: 0.3
+                            });
+                            
+                            // เส้นแยกแต่ละชั้นเรียน ม.1 - ม.6
+                            const classColors = ['#ec4899', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#f97316'];
+                            SYS_CONFIG.CLASS_LIST.forEach((cls, idx) => {
+                                const classData = sortedTerms.map(term => {
+                                    let tPoints = 0, tCredits = 0;
+                                    const classStudents = allStudents.filter(s => s.personal.class === cls);
+                                    classStudents.forEach(s => {
+                                        const termSubs = s.subjects.filter(sub => sub.semester === term.split('/')[0] && sub.year === term.split('/')[1]);
+                                        termSubs.forEach(sub => {
+                                            const c = parseFloat(sub.credits) || 0;
+                                            const g = parseFloat(sub.grade);
+                                            if(!isNaN(g) && !['ร','มส','ผ','มผ'].includes(String(sub.grade).trim())) {
+                                                tPoints += c * g; tCredits += c;
+                                            }
+                                        });
+                                    });
+                                    return tCredits > 0 ? (tPoints/tCredits).toFixed(2) : null;
+                                });
+                                datasets.push({
+                                    label: cls,
+                                    data: classData,
+                                    borderColor: classColors[idx % classColors.length],
+                                    backgroundColor: classColors[idx % classColors.length],
+                                    borderWidth: 2,
+                                    tension: 0.4
+                                });
+                            });
+                        } else {
+                            // 1.2 สำหรับครูประจำชั้น เห็นแค่ชั้นตัวเอง
+                            const teacherClass = Store.auth.access;
+                            const classData = sortedTerms.map(term => {
+                                let tPoints = 0, tCredits = 0;
+                                const classStudents = allStudents.filter(s => s.personal.class === teacherClass);
+                                classStudents.forEach(s => {
+                                    const termSubs = s.subjects.filter(sub => sub.semester === term.split('/')[0] && sub.year === term.split('/')[1]);
+                                    termSubs.forEach(sub => {
+                                        const c = parseFloat(sub.credits) || 0;
+                                        const g = parseFloat(sub.grade);
+                                        if(!isNaN(g) && !['ร','มส','ผ','มผ'].includes(String(sub.grade).trim())) {
+                                            tPoints += c * g; tCredits += c;
+                                        }
+                                    });
+                                });
+                                return tCredits > 0 ? (tPoints/tCredits).toFixed(2) : null;
+                            });
+                            datasets.push({
+                                label: `เฉลี่ยรวมชั้น ${teacherClass}`,
+                                data: classData,
+                                borderColor: '#6366f1',
+                                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                borderWidth: 3,
+                                tension: 0.4,
+                                fill: true
+                            });
+                        }
+
+                        Store.charts.dLine = new Chart(ctxL.getContext('2d'), {
+                            type: 'line',
+                            data: { labels: sortedTerms, datasets: datasets },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                plugins: { legend: { position: 'bottom', labels: { font: { family: "'Kanit', sans-serif", size: 10 } } } },
+                                scales: { y: { min: 0, max: 4 } }
+                            }
+                        });
+
+                    } else if (chartType === 'subject') {
+                        // โหมด: 2 ค่าเฉลี่ยแยกตามรายวิชา (แกน X คือชื่อวิชา) ในเทอมล่าสุด หรือเทอมที่เลือก
+                        const targetTerm = Store.temp.dashboardTerm === 'ALL' ? sortedTerms[sortedTerms.length - 1] : Store.temp.dashboardTerm; 
+                        
+                        let authArr = allStudents;
+                        if(Store.auth.role === 'teacher') authArr = allStudents.filter(s => s.personal.class === Store.auth.access);
+                        else if (Store.temp.dashboardClass !== 'ALL') authArr = allStudents.filter(s => s.personal.class === Store.temp.dashboardClass);
+
+                        const subjMap = {};
+                        authArr.forEach(s => {
+                            const termSubs = s.subjects.filter(sub => `${sub.semester}/${sub.year}` === targetTerm);
+                            termSubs.forEach(sub => {
+                                const subjName = sub.subjectName;
+                                const g = parseFloat(sub.grade);
+                                if(!isNaN(g) && !['ร','มส','ผ','มผ'].includes(String(sub.grade).trim())) {
+                                    if(!subjMap[subjName]) subjMap[subjName] = { total: 0, count: 0 };
+                                    subjMap[subjName].total += g;
+                                    subjMap[subjName].count += 1;
+                                }
+                            });
+                        });
+
+                        const subjLabels = Object.keys(subjMap).slice(0, 15); // จำกัดโชว์ 15 วิชาแรกกันกราฟล้นและดูยาก
+                        const subjData = subjLabels.map(k => (subjMap[k].total / subjMap[k].count).toFixed(2));
+
+                        Store.charts.dLine = new Chart(ctxL.getContext('2d'), {
+                            type: 'line',
+                            data: { 
+                                labels: subjLabels, 
+                                datasets: [{
+                                    label: `เกรดเฉลี่ยรายวิชา (เทอม ${targetTerm || '-'})`,
+                                    data: subjData,
+                                    borderColor: '#14b8a6',
+                                    backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                                    borderWidth: 2,
+                                    tension: 0.3,
+                                    fill: true,
+                                    pointBackgroundColor: '#0f766e'
+                                }] 
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                plugins: { legend: { position: 'bottom', labels: { font: { family: "'Kanit', sans-serif" } } } },
+                                scales: { 
+                                    x: { ticks: { maxRotation: 45, minRotation: 45, font: { size: 9 } } },
+                                    y: { min: 0, max: 4 } 
+                                }
+                            }
+                        });
+                    }
+                },
+
                 renderTable: () => {
                     const tableEl = document.getElementById('main-db-table');
                     const tbody = document.getElementById('tbody-db-mgr');
@@ -1533,13 +1838,19 @@
 
                     const arr = Object.values(Store.db.grouped);
                     let authArr = arr;
-                    if(Store.auth.role !== 'admin') {
+                    if(Store.auth.role === 'teacher') {
                         authArr = arr.filter(s => s.personal.class === Store.auth.access);
                     } else if (dClass !== 'ALL') {
                         authArr = arr.filter(s => s.personal.class === dClass);
                     }
                     
                     let count = 0;
+                    const isReadOnly = (Store.auth.role === 'director');
+
+                    // ปรับแต่ง CSS คอลัมน์จัดการตามสิทธิ์
+                    const actionCols = document.querySelectorAll('.action-col');
+                    if(isReadOnly) { actionCols.forEach(el => el.classList.add('hidden')); }
+                    else { actionCols.forEach(el => el.classList.remove('hidden')); }
 
                     authArr.forEach(s => {
                         let filteredSubs = Store.temp.dashboardTerm !== 'ALL' 
@@ -1559,17 +1870,25 @@
                                 count++;
                                 const formalName = CLASS_DISPLAY_NAMES[p.class] || p.class;
                                 if(tbody) {
+                                    let actionButtons = `<button onclick="SystemEngine.Router.navigate('transcript', '${p.id}')" class="text-blue-500 hover:text-blue-700 transition-colors bg-blue-50 w-8 h-8 rounded-lg hover:bg-blue-100 shadow-sm" title="ดูผลการเรียน"><i class="fas fa-eye text-xs"></i></button>`;
+                                    
+                                    // โชว์ปุ่มแก้/ลบ ให้เฉพาะคนที่ไม่ใช่ Director
+                                    if(!isReadOnly) {
+                                        actionButtons += `
+                                            <button onclick="SystemEngine.Dashboard.edit('${p.id}')" class="text-amber-500 hover:text-amber-700 transition-colors bg-amber-50 w-8 h-8 rounded-lg hover:bg-amber-100 shadow-sm" title="แก้ไขข้อมูลเบื้องต้น"><i class="fas fa-edit text-xs"></i></button>
+                                            <button onclick="SystemEngine.Dashboard.del('${p.id}')" class="text-rose-400 hover:text-rose-600 transition-colors bg-rose-50 w-8 h-8 rounded-lg hover:bg-rose-100 shadow-sm" title="ลบข้อมูล"><i class="fas fa-trash-alt text-xs"></i></button>
+                                        `;
+                                    }
+
                                     tbody.innerHTML += `
                                         <tr class="hover:bg-slate-50 transition-colors">
                                             <td class="py-3 px-5 font-mono text-slate-500 border-b border-slate-100">${p.id}</td>
                                             <td class="py-3 px-5 font-medium text-slate-800 border-b border-slate-100">${p.name}</td>
                                             <td class="py-3 px-5 text-center border-b border-slate-100"><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-xs border border-slate-200">${formalName.replace('มัธยมศึกษาปีที่ ', 'ม.')}</span></td>
                                             <td class="py-3 px-5 text-center border-b border-slate-100"><span class="text-xs font-medium text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md border border-brand-100">${filteredSubs.length}</span></td>
-                                            <td class="py-3 px-5 text-center border-b border-slate-100">
+                                            <td class="py-3 px-5 text-center border-b border-slate-100 ${isReadOnly ? 'hidden' : ''}">
                                                 <div class="flex items-center justify-center gap-2">
-                                                    <button onclick="SystemEngine.Router.navigate('transcript', '${p.id}')" class="text-blue-500 hover:text-blue-700 transition-colors bg-blue-50 w-8 h-8 rounded-lg hover:bg-blue-100 shadow-sm" title="ดูผลการเรียน"><i class="fas fa-eye text-xs"></i></button>
-                                                    <button onclick="SystemEngine.Dashboard.edit('${p.id}')" class="text-amber-500 hover:text-amber-700 transition-colors bg-amber-50 w-8 h-8 rounded-lg hover:bg-amber-100 shadow-sm" title="แก้ไขข้อมูลเบื้องต้น"><i class="fas fa-edit text-xs"></i></button>
-                                                    <button onclick="SystemEngine.Dashboard.del('${p.id}')" class="text-rose-400 hover:text-rose-600 transition-colors bg-rose-50 w-8 h-8 rounded-lg hover:bg-rose-100 shadow-sm" title="ลบข้อมูล"><i class="fas fa-trash-alt text-xs"></i></button>
+                                                    ${actionButtons}
                                                 </div>
                                             </td>
                                         </tr>
@@ -1590,6 +1909,9 @@
                     }
                 },
                 edit: (id) => {
+                    // ป้องกัน Director กด Edit
+                    if(Store.auth.role === 'director') return SystemEngine.Utils.toast('Error', 'ผู้อำนวยการไม่มีสิทธิ์แก้ไขข้อมูล', 'error');
+
                     const student = Store.db.grouped[id];
                     if(!student) return;
                     Swal.fire({
@@ -1647,6 +1969,7 @@
                     });
                 },
                 del: async (id) => {
+                    if(Store.auth.role === 'director') return;
                     const r = await Swal.fire({ title: 'ยืนยันลบ?', text: `ลบข้อมูลรหัส ${id}`, icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'ลบ', cancelButtonText: 'ยกเลิก' });
                     if(r.isConfirmed) {
                         Swal.fire({title:'Deleting...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
@@ -1698,7 +2021,7 @@
                         }
                     }
 
-                    if(!cls && Store.auth.role !== 'admin') cls = Store.auth.access;
+                    if(!cls && Store.auth.role === 'teacher') cls = Store.auth.access; // ป้องกันบอท
                     if(subRow === -1) return Swal.fire('ไม่พบแถววิชา', 'กรุณาตรวจสอบโครงสร้าง ปพ.5', 'error');
 
                     let creditRow = subRow + 1;

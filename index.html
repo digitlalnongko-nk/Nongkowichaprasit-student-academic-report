@@ -218,6 +218,25 @@
             background-color: #e2e8f0; 
         }
 
+        /* ✨ ลายน้ำ (Watermark) แนวนอนพาดเฉียงทับใบ ปพ. */
+        .watermark-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 150px;
+            transform: rotate(-35deg) scale(1.5);
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(148, 163, 184, 0.15); /* สีเทาอ่อน Slate-400 โปร่งใส 15% */
+            white-space: nowrap;
+            pointer-events: none; /* กดทะลุได้ ไม่บังปุ่มหรือตาราง */
+            z-index: 50; /* ทับทุกสิ่งในใบรายงาน */
+            user-select: none;
+        }
+
         /* ====================================================================
          PRINT ENGINE (OFFICIAL A4 STRICT MODE)
          ==================================================================== */
@@ -229,6 +248,14 @@
                 font-family: 'Sarabun', sans-serif !important;
                 font-size: 14pt !important; 
                 -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+            }
+
+            /* ควบคุมลายน้ำตอนปริ้นให้สีเข้มขึ้นนิดนึงและออกชัวร์ๆ */
+            .watermark-overlay {
+                color: rgba(148, 163, 184, 0.25) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                z-index: 50 !important;
             }
             
             .no-print, header, nav, #toast-deck, .modal, #splash-screen, #bg-ambience { display: none !important; }
@@ -329,7 +356,7 @@
             <div class="flex items-center gap-2">
                 <div id="auth-guest-controls" class="animate-fade-in no-print">
                     <button onclick="SystemEngine.UI.openModal('modal-login')" class="btn-minimal px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium text-sm hover:bg-slate-50 shadow-sm font-kanit flex items-center gap-2">
-                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับครูและผู้ดูแลระบบ</span>
+                        <i class="fas fa-lock text-slate-400"></i> <span class="hidden sm:inline">สำหรับบุคลากร</span>
                     </button>
                 </div>
 
@@ -423,22 +450,32 @@
                     </div>
                 </div>
 
-                <div class="minimal-card p-6 md:p-12 lg:p-16 bg-white" id="transcript-paper">
+                <!-- 🚨 เพิ่มคลาส relative overflow-hidden เพื่อกักเก็บลายน้ำให้เรียบร้อย -->
+                <div class="minimal-card p-6 md:p-12 lg:p-16 bg-white relative overflow-hidden" id="transcript-paper">
                     
-                    <div class="text-center mb-8 border-b-[2px] border-slate-800 pb-4">
+                    <!-- ✨ ลายน้ำ (Watermark) แสดงพาดเฉียงทับใบ ปพ. -->
+                    <div class="watermark-overlay font-kanit print-exact">
+                        <span>ไว้สำหรับตรวจสอบผลการเรียนเท่านั้น</span>
+                        <span>ไว้สำหรับตรวจสอบผลการเรียนเท่านั้น</span>
+                        <span>ไว้สำหรับตรวจสอบผลการเรียนเท่านั้น</span>
+                        <span>ไว้สำหรับตรวจสอบผลการเรียนเท่านั้น</span>
+                        <span>ไว้สำหรับตรวจสอบผลการเรียนเท่านั้น</span>
+                    </div>
+
+                    <div class="text-center mb-8 border-b-[2px] border-slate-800 pb-4 relative z-10">
                         <img id="print-logo-official" src="logo.png" class="w-16 h-16 mx-auto mb-2 object-contain grayscale" onerror="this.style.display='none'">
                         <h1 class="text-xl font-bold text-slate-900 mb-1 font-sarabun tracking-wide">ระเบียนแสดงผลการเรียน (Transcript)</h1>
                         <h2 class="text-base font-medium text-slate-800 font-sarabun" id="print-school-title">School Name</h2>
                     </div>
 
-                    <div class="flex flex-col md:flex-row justify-between items-start mb-8 font-sarabun">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-8 font-sarabun relative z-10">
                         <div class="mb-4 md:mb-0">
                             <div class="text-2xl font-bold text-slate-900 mb-1" id="ts-val-name">ชื่อ นามสกุล</div>
                             <div class="text-slate-600 text-sm flex items-center gap-2">
-                                รหัสประจำตัว: <span class="font-bold border border-slate-200 px-2 py-0.5 rounded bg-slate-50" id="ts-val-id">00000</span>
+                                รหัสประจำตัว: <span class="font-bold border border-slate-200 px-2 py-0.5 rounded bg-slate-50/80" id="ts-val-id">00000</span>
                             </div>
                         </div>
-                        <div class="flex gap-6 text-sm bg-slate-50 border border-slate-100 px-6 py-3 rounded-lg print:bg-transparent print:border-none print:p-0">
+                        <div class="flex gap-6 text-sm bg-slate-50/80 border border-slate-100 px-6 py-3 rounded-lg print:bg-transparent print:border-none print:p-0">
                             <div>
                                 <div class="text-slate-500 mb-1 text-xs">ระดับชั้น</div>
                                 <div class="font-bold text-slate-800 text-base leading-none" id="ts-val-class">ม.-</div>
@@ -450,7 +487,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white border border-slate-200 shadow-sm rounded-xl p-4 mb-6 no-print flex flex-col md:flex-row items-center justify-between gap-4 font-sarabun">
+                    <div class="bg-white/80 border border-slate-200 shadow-sm rounded-xl p-4 mb-6 no-print flex flex-col md:flex-row items-center justify-between gap-4 font-sarabun relative z-10">
                         <div class="flex items-center gap-3 w-full md:w-auto">
                             <div class="w-10 h-10 rounded-lg theme-bg text-white flex items-center justify-center shadow-sm"><i class="fas fa-calendar-alt"></i></div>
                             <div class="flex flex-col">
@@ -471,32 +508,32 @@
                         </div>
                     </div>
 
-                    <div class="print-only text-sm font-bold pb-2 mb-2 flex justify-between items-end border-b border-slate-800 font-sarabun">
+                    <div class="print-only text-sm font-bold pb-2 mb-2 flex justify-between items-end border-b border-slate-800 font-sarabun relative z-10">
                         <span>ผลการเรียนภาคเรียนที่ <span id="print-term-label">...</span></span>
                         <span>เกรดเฉลี่ย (GPA): <span id="print-gpa-label">0.00</span></span>
                     </div>
 
-                    <div class="mb-8">
+                    <div class="mb-8 relative z-10">
                         <div class="overflow-x-auto w-full rounded-lg border border-slate-300 print:border-none custom-scrollbar">
-                            <table class="w-full min-w-[600px] text-left font-sarabun text-sm border-collapse">
+                            <table class="w-full min-w-[600px] text-left font-sarabun text-sm border-collapse bg-transparent">
                                 <thead>
                                     <tr>
-                                        <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-28 text-slate-800 whitespace-nowrap">รหัสวิชา</th>
-                                        <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-slate-800 whitespace-nowrap">ชื่อรายวิชา</th>
-                                        <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-24 text-slate-800 whitespace-nowrap">หน่วยกิต</th>
-                                        <th class="py-2.5 px-4 bg-slate-50 font-bold border border-slate-300 text-center w-28 text-slate-800 whitespace-nowrap">ผลการเรียน</th>
+                                        <th class="py-2.5 px-4 bg-slate-50/70 font-bold border border-slate-300 text-center w-28 text-slate-800 whitespace-nowrap">รหัสวิชา</th>
+                                        <th class="py-2.5 px-4 bg-slate-50/70 font-bold border border-slate-300 text-slate-800 whitespace-nowrap">ชื่อรายวิชา</th>
+                                        <th class="py-2.5 px-4 bg-slate-50/70 font-bold border border-slate-300 text-center w-24 text-slate-800 whitespace-nowrap">หน่วยกิต</th>
+                                        <th class="py-2.5 px-4 bg-slate-50/70 font-bold border border-slate-300 text-center w-28 text-slate-800 whitespace-nowrap">ผลการเรียน</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody-transcript" class="divide-y divide-slate-200"></tbody>
                             </table>
                         </div>
                         
-                        <div id="ts-empty-state" class="hidden text-center py-10 text-slate-400 bg-slate-50 border border-t-0 border-slate-300">
+                        <div id="ts-empty-state" class="hidden text-center py-10 text-slate-400 bg-slate-50/70 border border-t-0 border-slate-300">
                             <p class="font-sarabun text-sm font-medium">ไม่พบข้อมูลผลการเรียนในภาคเรียนนี้</p>
                         </div>
                     </div>
 
-                    <div class="mt-12 pt-4 text-sm text-center font-sarabun">
+                    <div class="mt-12 pt-4 text-sm text-center font-sarabun relative z-10">
                         <div class="grid grid-cols-2 gap-8">
                             <div>
                                 <p class="mb-8 border-b border-dotted border-slate-400 w-full max-w-[220px] mx-auto"></p>
@@ -886,7 +923,7 @@
         };
 
         const SYS_CONFIG = {
-            VERSION: '10.4.1 Cloud Realtime Pro Max',
+            VERSION: '10.5.0 Ultimate with Watermark',
             // 🚨 ใส่ Web App URL ของคุณที่นี่
             GAS_URL: 'https://script.google.com/macros/s/AKfycbwJ3nyXQPkbm51Wu3iNnfYVsU9HPWIq6_B4iVWlocs9BsGt6OV-Ar36zcsVq7jYkdgf5g/exec',
             // ✅ ใช้ "ม.1" ถึง "ม.6" เพื่อให้ตรงกับข้อมูลใน Excel ที่วิเคราะห์แล้ว

@@ -154,7 +154,7 @@
         .btn-minimal { transition: all 0.2s ease; }
         .btn-minimal:active { transform: scale(0.97); }
 
-        /* แก้ไขเพิ่ม Animation Spin ให้ตัวหมุนโหลดใช้งานได้จริง */
+        /* 🔄 แก้ไข: เพิ่ม Keyframes Spin ให้ตัวโหลดหมุนได้จริงแบบสมูท (Linear) */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -171,7 +171,8 @@
             border: 3px solid #f1f5f9;
             border-top: 3px solid var(--theme-primary);
             border-radius: 50%;
-            animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            /* แก้ให้หมุนสมูทด้วย linear */
+            animation: spin 1s linear infinite;
         }
 
         /* ✨ ตารางสรุปผลการเรียน (CrossTab) ที่ปรับให้ล็อคหัวตารางและชื่อได้สมบูรณ์แบบ แถบเลื่อนบน-ล่างซ้ายขวา */
@@ -362,7 +363,7 @@
                     ตรวจสอบ<span class="theme-text">ผลสัมฤทธิ์</span>ออนไลน์
                 </h2>
                 <p class="text-base md:text-lg text-slate-500 font-sarabun max-w-2xl mx-auto">
-                    ค้นหารายชื่อและตรวจสอบผลการเรียนผ่านระบบออนไลน์ กรุณาเลือกระดับชั้นเรียนของคุณเพื่อเริ่มต้น
+                    ค้นหาและตรวจสอบผลการเรียนผ่านระบบออนไลน์ เลือกระดับชั้นเรียนของคุณเพื่อเริ่มต้น
                 </p>
             </div>
 
@@ -398,10 +399,16 @@
         <div id="view-transcript" class="app-view hidden animate-fade-in">
             <div class="max-w-[1100px] mx-auto" id="transcript-export-container">
                 
+                <!-- ✨ เพิ่มปุ่ม ย้อนกลับ (Go Back) ตีคู่กับ หน้าหลัก -->
                 <div class="flex flex-wrap justify-between items-center mb-4 no-print gap-3">
-                    <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
-                        <i class="fas fa-chevron-left text-xs"></i> กลับสู่หน้าหลัก
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="SystemEngine.Router.goBack()" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
+                            <i class="fas fa-arrow-left text-xs"></i> ย้อนกลับ
+                        </button>
+                        <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
+                            <i class="fas fa-home text-xs"></i> หน้าหลัก
+                        </button>
+                    </div>
                     <div class="flex gap-2">
                         <button onclick="SystemEngine.Export.toExcel()" class="bg-white/90 backdrop-blur text-emerald-600 border border-emerald-200 hover:bg-emerald-50 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm font-sarabun transition-colors">
                             <i class="fas fa-file-excel"></i> ส่งออก (Excel)
@@ -515,7 +522,19 @@
         ---------------------------------------------------- -->
         <div id="view-dashboard" class="app-view hidden animate-fade-in space-y-6">
             
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 font-kanit mb-6">
+            <!-- ✨ เพิ่มปุ่ม ย้อนกลับ (Go Back) ตีคู่กับ หน้าหลัก -->
+            <div class="flex flex-wrap justify-start items-center mb-0 no-print gap-3">
+                <div class="flex items-center gap-2">
+                    <button onclick="SystemEngine.Router.goBack()" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
+                        <i class="fas fa-arrow-left text-xs"></i> ย้อนกลับ
+                    </button>
+                    <button onclick="SystemEngine.Router.navigate('home')" class="text-slate-600 hover:text-slate-900 font-sarabun text-sm flex items-center gap-2 font-medium bg-white/80 backdrop-blur px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors hover:border-slate-300">
+                        <i class="fas fa-home text-xs"></i> หน้าหลัก
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 font-kanit mb-6 mt-4">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-medium text-slate-800">แดชบอร์ดจัดการข้อมูลส่วนกลาง</h2>
                     <p class="text-slate-500 font-sarabun text-sm mt-1 flex items-center gap-2">
@@ -866,13 +885,15 @@
         };
 
         const SYS_CONFIG = {
-            VERSION: '10.4.0 Ultimate Roles & Analytics',
+            VERSION: '10.4.1 Cloud Realtime Pro Max',
             // 🚨 ใส่ Web App URL ของคุณที่นี่
             GAS_URL: 'https://script.google.com/macros/s/AKfycbwJ3nyXQPkbm51Wu3iNnfYVsU9HPWIq6_B4iVWlocs9BsGt6OV-Ar36zcsVq7jYkdgf5g/exec',
+            // ✅ ใช้ "ม.1" ถึง "ม.6" เพื่อให้ตรงกับข้อมูลใน Excel ที่วิเคราะห์แล้ว
             CLASS_LIST: ['ม.1', 'ม.2', 'ม.3', 'ม.4', 'ม.5', 'ม.6'],
             VALID_GRADES: ['0','1','1.5','2','2.5','3','3.5','4','ร','มส','ผ','มผ']
         };
 
+        // ตั้งชื่อที่แสดงผลใน UI ให้สวยงามและเป็นทางการ
         const CLASS_DISPLAY_NAMES = {
             'ม.1': 'มัธยมศึกษาปีที่ 1', 'ม.2': 'มัธยมศึกษาปีที่ 2', 'ม.3': 'มัธยมศึกษาปีที่ 3',
             'ม.4': 'มัธยมศึกษาปีที่ 4', 'ม.5': 'มัธยมศึกษาปีที่ 5', 'ม.6': 'มัธยมศึกษาปีที่ 6'
@@ -904,10 +925,12 @@
             auth: { user: null, role: null, access: null },
             db: { raw: [], grouped: {} },
             settings: { name: 'โรงเรียนหนองโกวิชาประสิทธิ์พิทยาคม', color: '#8b5cf6' },
-            temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all', dashboardClass: 'ALL' },
+            // เพิ่มการจำประวัติว่ามาจากหน้าไหน (Smart History)
+            temp: { currentStudentId: null, excelCache: [], dashboardTerm: 'ALL', dashboardFilter: 'all', dashboardClass: 'ALL', currentView: { id: 'home', param: null } },
             charts: { dBar: null, dLine: null } 
         };
 
+        // Cache-Busting API Wrapper
         const CloudAPI = {
             get: async (action) => {
                 const cacheBuster = new Date().getTime();
@@ -1055,16 +1078,42 @@
                     if (viewId === 'dashboard' && !Store.auth.user) {
                         SystemEngine.Utils.toast('ปฏิเสธการเข้าถึง', 'กรุณาเข้าสู่ระบบก่อน', 'error'); return;
                     }
+                    
+                    // บันทึกว่าตอนนี้อยู่หน้าไหน
+                    Store.temp.currentView = { id: viewId, param: param };
+
                     document.querySelectorAll('.app-view').forEach(el => el.classList.add('hidden'));
                     window.scrollTo({top:0, behavior:'smooth'});
                     const target = document.getElementById(`view-${viewId}`);
                     if(target) target.classList.remove('hidden');
 
                     switch(viewId) {
-                        case 'home': SystemEngine.UI.hideDirectory(); SystemEngine.Home.render(); break;
-                        case 'transcript': if(param) SystemEngine.Transcript.load(param); break;
-                        case 'dashboard': SystemEngine.Dashboard.init(); break;
+                        case 'home': 
+                            if(!param) SystemEngine.UI.hideDirectory(); // ถ้ามาหน้าหลักเฉยๆ ให้ซ่อนรายชื่อ
+                            SystemEngine.Home.render(); 
+                            break;
+                        case 'transcript': 
+                            if(param) SystemEngine.Transcript.load(param); 
+                            break;
+                        case 'dashboard': 
+                            SystemEngine.Dashboard.init(); 
+                            break;
                     }
+                },
+                // ✨ ระบบย้อนกลับอัจฉริยะ (จำว่ามาจากไหน)
+                goBack: () => {
+                    const cur = Store.temp.currentView;
+                    // ถ้ากำลังดูเกรดอยู่ พอกดย้อนกลับจะเด้งไปหน้ารายชื่อห้องนั้นทันที
+                    if (cur.id === 'transcript' && cur.param) {
+                        const st = Store.db.grouped[cur.param];
+                        if (st && st.personal) {
+                            SystemEngine.Router.navigate('home', 'keep_directory');
+                            setTimeout(() => { SystemEngine.Home.showDirectory(st.personal.class); }, 50);
+                            return;
+                        }
+                    }
+                    // ถ้าอยู่แดชบอร์ด หรือไม่เข้าเงื่อนไข ให้กลับหน้าแรก
+                    SystemEngine.Router.navigate('home');
                 }
             },
             
